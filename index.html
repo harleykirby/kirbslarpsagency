@@ -1,0 +1,2361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kirbs Larps Agency</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dim: #6B5520;
+    --dark: #0A0A0A;
+    --surface: #131313;
+    --surface2: #1B1B1B;
+    --surface3: #222;
+    --border: #252525;
+    --border2: #333;
+    --text: #F0EDE8;
+    --muted: #7A7772;
+    --muted2: #555;
+    --green: #4CAF82;
+    --red: #D95555;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+
+  /* ─── NAVBAR ─── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.15rem;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .nav-logo .logo-mark {
+    width: 30px;
+    height: 30px;
+    background: var(--gold);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #000;
+    font-weight: 800;
+  }
+
+  .nav-logo span { color: var(--gold); }
+
+  .nav-tabs {
+    display: flex;
+    gap: 0;
+    list-style: none;
+  }
+
+  .nav-tabs li a {
+    display: block;
+    padding: 0 1.1rem;
+    height: 64px;
+    line-height: 64px;
+    font-size: 13.5px;
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+  }
+
+  .nav-tabs li a:hover { color: var(--text); }
+  .nav-tabs li a.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding: 6rem 2rem 5rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,168,76,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: '';
+    width: 30px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.5;
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.2rem;
+    position: relative;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--gold);
+  }
+
+  .hero-sub {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 480px;
+    margin: 0 auto 2.5rem;
+    position: relative;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+  }
+
+  .btn {
+    padding: 0.7rem 1.6rem;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: #000;
+    border: 1px solid var(--gold);
+  }
+  .btn-primary:hover { background: var(--gold-light); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border2);
+  }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ─── MAIN LAYOUT ─── */
+  .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+
+  /* ─── PAGES ─── */
+  .page { display: none; padding: 3.5rem 0 5rem; }
+  .page.active { display: block; }
+
+  /* ─── SECTION HEADER ─── */
+  .section-header { margin-bottom: 2.5rem; }
+  .section-num { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+  .section-title { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 700; line-height: 1.15; margin-bottom: 0.4rem; }
+  .section-desc { font-size: 14px; color: var(--muted); }
+
+  /* ─── RULE PILLS ─── */
+  .pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+  .pill {
+    padding: 0.35rem 0.9rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    font-size: 13px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .pill .ck { color: var(--gold); font-size: 11px; }
+  .pill.bad { background: #1E1313; border-color: #3A2020; color: var(--red); }
+
+  /* ─── GOOD/BAD GRID ─── */
+  .split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.2rem 1.3rem;
+  }
+  .card.good { border-color: #1E3328; }
+  .card.bad { border-color: #331E1E; }
+
+  .card-label {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 0.9rem;
+  }
+  .card-label.g { color: var(--green); }
+  .card-label.b { color: var(--red); }
+
+  .item-row {
+    display: flex; align-items: center; gap: 9px;
+    padding: 0.45rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .item-row:last-child { border-bottom: none; }
+  .item-row .ic { font-size: 12px; flex-shrink: 0; }
+  .item-row.g .ic { color: var(--green); }
+  .item-row.b .ic { color: var(--red); }
+
+  /* ─── TIP BAR ─── */
+  .tip {
+    background: var(--surface);
+    border-left: 3px solid var(--gold);
+    padding: 0.75rem 1rem;
+    border-radius: 0 8px 8px 0;
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+  .tip strong { color: var(--text); }
+
+  /* ─── DIVIDER ─── */
+  .div { height: 1px; background: var(--border); margin: 2.5rem 0; }
+
+  /* ─── ICON OPTIONS GRID ─── */
+  .options-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.8rem; margin-bottom: 1.5rem; }
+  .option-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.1rem 0.8rem;
+    text-align: center;
+  }
+  .option-card .oi { font-size: 28px; margin-bottom: 0.6rem; }
+  .option-card .on { font-size: 13px; font-weight: 500; }
+
+  /* ─── BIO EXAMPLES ─── */
+  .bio-list { list-style: none; margin-bottom: 1.5rem; }
+  .bio-list li {
+    padding: 0.7rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 0.5rem;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .bio-list li::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+
+  /* ─── CORE RULE ─── */
+  .core-rule {
+    background: var(--surface);
+    border: 1px solid var(--gold-dim);
+    border-radius: 16px;
+    padding: 2rem 2.5rem;
+    text-align: center;
+    margin-top: 1rem;
+  }
+  .core-rule .cr-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; }
+  .core-rule h3 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+  .cr-items { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; }
+  .cr-item strong { display: block; font-family: 'Syne', sans-serif; font-size: 1.2rem; color: var(--text); margin-bottom: 2px; }
+  .cr-item span { font-size: 13px; color: var(--muted); }
+
+  /* ─── CONTENT PAGE ─── */
+  .niche-intro {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem 1.8rem;
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1.2rem;
+  }
+  .niche-intro .ni-icon { font-size: 2rem; flex-shrink: 0; margin-top: 2px; }
+  .niche-intro h3 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .niche-intro p { font-size: 14px; color: var(--muted); }
+
+  /* ─── COMING SOON ─── */
+  .coming-soon {
+    text-align: center;
+    padding: 5rem 1rem;
+    color: var(--muted);
+  }
+  .coming-soon .cs-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.4; }
+  .coming-soon h3 { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
+  .coming-soon p { font-size: 14px; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem;
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted2);
+  }
+  footer span { color: var(--gold); }
+
+  /* ─── SUB-TABS ─── */
+  .subtab-bar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 64px;
+    z-index: 90;
+  }
+  .subtabs {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .subtabs::-webkit-scrollbar { display: none; }
+  .subtab {
+    padding: 0 1.3rem;
+    height: 52px;
+    line-height: 52px;
+    font-size: 13.5px;
+    color: var(--muted);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    font-family: 'DM Sans', sans-serif;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .subtab:hover { color: var(--text); }
+  .subtab.active { color: var(--gold); border-bottom-color: var(--gold); }
+  .subtab-content { display: none; }
+  .subtab-content.active { display: block; }
+
+  /* ─── VERSION CARDS ─── */
+  .version-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+  .version-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.2rem;
+    text-align: center;
+  }
+  .version-card .v-label { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+  .version-card .v-title { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .version-card .v-desc { font-size: 13px; color: var(--muted); }
+
+  /* ─── ENERGY GRID ─── */
+  .energy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.8rem; margin-bottom: 1.5rem; }
+  .energy-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .energy-card .arrow { color: var(--gold); font-size: 1rem; flex-shrink: 0; }
+  .energy-card span { font-size: 14px; }
+
+  /* ─── VIRAL PSYCHOLOGY STYLES ─── */
+  .vp-intro {
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 10px 10px 0;
+    padding: 1rem 1.2rem;
+    margin-bottom: 2rem;
+  }
+  .vp-intro p { font-size: 14px; color: var(--muted); margin-bottom: 0.3rem; }
+  .vp-intro p:first-child { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 0.5rem; }
+
+  .triggers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .trigger-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.1rem 1.2rem;
+    transition: border-color 0.2s;
+  }
+  .trigger-card:hover { border-color: var(--gold-dim); }
+  .trigger-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.8rem;
+  }
+  .trigger-num {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: #000;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .trigger-name { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; }
+  .trigger-bullets { list-style: none; margin-bottom: 0.8rem; }
+  .trigger-bullets li {
+    font-size: 13px;
+    color: var(--muted);
+    padding: 3px 0 3px 14px;
+    position: relative;
+    line-height: 1.45;
+  }
+  .trigger-bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 10px;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: 0.5;
+  }
+  .trigger-why {
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    border-top: 1px solid var(--border);
+    padding-top: 0.6rem;
+    margin-top: 0.4rem;
+  }
+  .trigger-card.wide { grid-column: 1 / -1; }
+
+  .vp-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .vp-info-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.1rem 1.2rem;
+  }
+  .vp-info-card h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 0.7rem;
+    color: var(--text);
+  }
+  .vp-info-card ul { list-style: none; }
+  .vp-info-card ul li {
+    font-size: 13px;
+    color: var(--muted);
+    padding: 3px 0 3px 14px;
+    position: relative;
+    line-height: 1.45;
+  }
+  .vp-info-card ul li::before {
+    content: '';
+    position: absolute; left: 0; top: 10px;
+    width: 4px; height: 4px;
+    border-radius: 50%; background: var(--border2);
+  }
+  .vp-payoff-note {
+    font-size: 11px;
+    color: var(--gold);
+    margin-top: 0.6rem;
+    padding-top: 0.6rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .four-things-bar {
+    background: var(--surface);
+    border: 1px solid var(--gold-dim);
+    border-radius: 14px;
+    padding: 1.5rem 1.8rem;
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+  .four-things-bar p {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+  .four-pills {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .pill-gold {
+    padding: 0.5rem 1.1rem;
+    background: transparent;
+    border: 1px solid var(--gold-dim);
+    border-radius: 99px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gold-light);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .pill-gold .ck { font-size: 10px; opacity: 0.7; }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .page.active > * { animation: fadeUp 0.35s ease both; }
+  .page.active > *:nth-child(2) { animation-delay: 0.05s; }
+  .page.active > *:nth-child(3) { animation-delay: 0.1s; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 640px) {
+    nav { padding: 0 1rem; }
+    .nav-tabs li a { padding: 0 0.7rem; font-size: 12px; }
+    .hero { padding: 4rem 1.5rem 3.5rem; }
+    .container { padding: 0 1.2rem; }
+    .split-grid { grid-template-columns: 1fr; }
+    .cr-items { gap: 1.5rem; }
+    .version-grid { grid-template-columns: 1fr; }
+    .energy-grid { grid-template-columns: 1fr 1fr; }
+    .triggers-grid { grid-template-columns: 1fr; }
+    .vp-two-col { grid-template-columns: 1fr; }
+    .trigger-card.wide { grid-column: 1; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="#" class="nav-logo" onclick="showPage('home')">
+    <div class="logo-mark">K</div>
+    Kirbs <span>Larps</span> Agency
+  </a>
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <a href="https://discord.gg/VsyjbkbfZC" target="_blank" rel="noopener" title="Join our Discord" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);transition:border-color 0.2s,background 0.2s;" onmouseover="this.style.borderColor='#5865F2';this.style.background='#23272A'" onmouseout="this.style.borderColor='var(--border)';this.style.background='var(--surface2)'">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.032.055a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" fill="#5865F2"/>
+      </svg>
+    </a>
+    <ul class="nav-tabs">
+      <li><a href="#" class="active" data-page="home" onclick="showPage('home');return false;">Home</a></li>
+      <li><a href="#" data-page="account" onclick="showPage('account');return false;">Account Setup</a></li>
+      <li><a href="#" data-page="reinvent" onclick="showPage('reinvent');return false;">Don't Reinvent the Wheel</a></li>
+      <li><a href="#" data-page="thestart" onclick="showPage('thestart');return false;">The Start</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HOME PAGE -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-eyebrow">Welcome to the Agency</div>
+    <h1>Kirbs <em>Larps</em><br>Agency</h1>
+    <p class="hero-sub">Everything you need to build, grow and monetise your account — the right way.</p>
+    <div class="hero-cta">
+      <a href="#" class="btn btn-primary" onclick="showPage('account');return false;">Get Started →</a>
+      <a href="#" class="btn btn-ghost" onclick="showPage('account');showSubTab('niche');return false;">View Content Guide</a>
+    </div>
+    <div style="margin-top:2rem;position:relative;">
+      <a href="https://www.tiktok.com/@kirbslarpsagency" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--muted);font-size:13.5px;letter-spacing:0.04em;transition:color 0.2s;" onmouseover="this.style.color='#F0EDE8'" onmouseout="this.style.color='var(--muted)'">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;opacity:0.8;">
+          <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/>
+        </svg>
+        KIRBS LARPS AGENCY TIKTOK
+      </a>
+    </div>
+  </div>
+
+  <div class="container" style="padding-top:3.5rem;padding-bottom:5rem;">
+    <div class="options-grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;">
+      <div class="option-card" style="cursor:pointer;transition:border-color 0.2s;" onclick="showPage('account');showSubTab('setup');" onmouseover="this.style.borderColor='#C9A84C'" onmouseout="this.style.borderColor='#252525'">
+        <div class="oi">⚙️</div>
+        <div class="on" style="font-family:'Syne',sans-serif;font-size:1rem;margin-bottom:0.4rem;">Account Setup</div>
+        <p style="font-size:13px;color:var(--muted);">Username, profile picture, bio & more.</p>
+      </div>
+      <div class="option-card" style="cursor:pointer;transition:border-color 0.2s;" onclick="showPage('account');showSubTab('niche');" onmouseover="this.style.borderColor='#C9A84C'" onmouseout="this.style.borderColor='#252525'">
+        <div class="oi">🎯</div>
+        <div class="on" style="font-family:'Syne',sans-serif;font-size:1rem;margin-bottom:0.4rem;">Niche & Content</div>
+        <p style="font-size:13px;color:var(--muted);">Direction, positioning and content strategy.</p>
+      </div>
+      <div class="option-card" style="cursor:pointer;transition:border-color 0.2s;" onclick="showPage('account');showSubTab('trust');" onmouseover="this.style.borderColor='#C9A84C'" onmouseout="this.style.borderColor='#252525'">
+        <div class="oi">🔐</div>
+        <div class="on" style="font-family:'Syne',sans-serif;font-size:1rem;margin-bottom:0.4rem;">Trust & Rules</div>
+        <p style="font-size:13px;color:var(--muted);">Account trust, safety rules and setup tips.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ACCOUNT SETUP PAGE -->
+<div id="page-account" class="page">
+  <div class="subtab-bar">
+    <div class="container">
+      <div class="subtabs">
+        <button class="subtab active" data-sub="setup" onclick="showSubTab('setup')">Account Setup</button>
+        <button class="subtab" data-sub="niche" onclick="showSubTab('niche')">Niche, Content Direction & Positioning</button>
+        <button class="subtab" data-sub="trust" onclick="showSubTab('trust')">Account Trust & Setup Rules</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUB-TAB: ACCOUNT SETUP -->
+  <div id="sub-setup" class="subtab-content active">
+    <div class="container">
+      <div class="section-header" style="padding-top:2.5rem;">
+        <div class="section-num">01 — Account Setup</div>
+        <div class="section-title">Username, Profile & Bio</div>
+        <div class="section-desc">Your account should be understood in 2 seconds. Name. Picture. Bio. All aligned.</div>
+      </div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:1rem;">Username</div>
+      <div class="pills">
+        <div class="pill"><span class="ck">✓</span> Short</div>
+        <div class="pill"><span class="ck">✓</span> Easy to read</div>
+        <div class="pill"><span class="ck">✓</span> No numbers</div>
+        <div class="pill"><span class="ck">✓</span> No extra characters</div>
+      </div>
+      <div class="split-grid">
+        <div class="card good">
+          <div class="card-label g">Good</div>
+          <div class="item-row g"><span class="ic">✓</span> @wealthvision</div>
+          <div class="item-row g"><span class="ic">✓</span> @luxuryclips</div>
+          <div class="item-row g"><span class="ic">✓</span> @richmindset</div>
+        </div>
+        <div class="card bad">
+          <div class="card-label b">Bad</div>
+          <div class="item-row b"><span class="ic">✗</span> @wealth_vision123</div>
+          <div class="item-row b"><span class="ic">✗</span> @luxury.clips99</div>
+          <div class="item-row b"><span class="ic">✗</span> @richmindset_x</div>
+        </div>
+      </div>
+      <div class="tip"><strong>Rule:</strong> Clean usernames look more legit.</div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:1rem;">Profile Picture</div>
+      <div class="pills">
+        <div class="pill"><span class="ck">✓</span> High quality</div>
+        <div class="pill"><span class="ck">✓</span> Clear subject</div>
+        <div class="pill"><span class="ck">✓</span> Matches your niche</div>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:0.9rem;text-transform:uppercase;letter-spacing:0.1em;">Best options</p>
+      <div class="options-grid" style="margin-bottom:1.5rem;">
+        <div class="option-card"><div class="oi">🚗</div><div class="on">Luxury Car</div></div>
+        <div class="option-card"><div class="oi">⌚</div><div class="on">Watch</div></div>
+        <div class="option-card"><div class="oi">✦</div><div class="on">Clean Logo</div></div>
+        <div class="option-card"><div class="oi">🖼️</div><div class="on">Aesthetic Image</div></div>
+      </div>
+      <div class="pills" style="margin-bottom:1.5rem;">
+        <div class="pill bad">✗ Blurry</div>
+        <div class="pill bad">✗ Random image</div>
+        <div class="pill bad">✗ Low quality</div>
+      </div>
+      <div class="tip"><strong>Rule:</strong> First impression matters.</div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">Bio</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">1 clear line. What the page is about + optional value hook.</p>
+      <div class="pills" style="margin-bottom:1.2rem;">
+        <div class="pill"><span class="ck">✓</span> What the page is about</div>
+        <div class="pill"><span class="ck">✓</span> Optional value hook</div>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:0.8rem;text-transform:uppercase;letter-spacing:0.1em;">Examples</p>
+      <ul class="bio-list">
+        <li>Luxury mindset daily</li>
+        <li>Learn how to go viral</li>
+        <li>Turning views into money</li>
+        <li>Growth + money content</li>
+      </ul>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">Emojis</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">1–2 max. Match the niche. Clean beats cluttered.</p>
+      <div class="card" style="margin-bottom:1.2rem;">
+        <p style="font-size:13px;color:var(--muted);margin-bottom:0.6rem;text-transform:uppercase;letter-spacing:0.1em;">Good choices</p>
+        <div style="font-size:2rem;display:flex;gap:1rem;margin-bottom:1rem;">💰 📈 🚀</div>
+        <div class="pills" style="margin-bottom:0;">
+          <div class="pill bad">✗ Too many emojis</div>
+          <div class="pill bad">✗ Random emojis</div>
+        </div>
+      </div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">Link in Bio</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Only add if it makes sense.</p>
+      <div class="pills" style="margin-bottom:1.5rem;">
+        <div class="pill"><span class="ck">✓</span> Course link</div>
+        <div class="pill"><span class="ck">✓</span> Discord</div>
+        <div class="pill"><span class="ck">✓</span> Landing page</div>
+        <div class="pill bad">✗ Random links</div>
+      </div>
+      <div class="core-rule" style="margin-bottom:4rem;">
+        <div class="cr-label">Core Rule</div>
+        <h3>Your page should be understood in 2 seconds.</h3>
+        <div class="cr-items">
+          <div class="cr-item"><strong>Name</strong><span>Clean handle</span></div>
+          <div class="cr-item"><strong>Picture</strong><span>On brand</span></div>
+          <div class="cr-item"><strong>Bio</strong><span>Crystal clear</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUB-TAB: NICHE & CONTENT -->
+  <div id="sub-niche" class="subtab-content">
+    <div class="container">
+      <div class="section-header" style="padding-top:2.5rem;">
+        <div class="section-num">02 — Niche & Content</div>
+        <div class="section-title">Niche, Content Direction<br>& Positioning</div>
+        <div class="section-desc">Your page needs to be clear. If people don't understand it instantly, they don't follow.</div>
+      </div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:1rem;">1. Pick One Niche</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Choose ONE and stick to it.</p>
+      <div class="split-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:1.2rem;">
+        <div class="card" style="text-align:center;padding:1.4rem 1rem;">
+          <div style="font-size:1.8rem;margin-bottom:0.6rem;">🏎️</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:0.3rem;">Larping / Luxury</div>
+          <div style="font-size:12px;color:var(--muted);">Cars, watches, lifestyle</div>
+        </div>
+        <div class="card" style="text-align:center;padding:1.4rem 1rem;border-color:var(--gold-dim);">
+          <div style="font-size:1.8rem;margin-bottom:0.6rem;">💰</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:0.3rem;">Money / Hustle</div>
+          <div style="font-size:12px;color:var(--muted);">Income, mindset, success</div>
+        </div>
+        <div class="card" style="text-align:center;padding:1.4rem 1rem;">
+          <div style="font-size:1.8rem;margin-bottom:0.6rem;">📈</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:0.3rem;">Growth / TikTok</div>
+          <div style="font-size:12px;color:var(--muted);">Viral tips, page building</div>
+        </div>
+      </div>
+      <div class="pills" style="margin-bottom:1.2rem;">
+        <div class="pill bad">✗ Don't mix all 3</div>
+        <div class="pill bad">✗ Don't switch later</div>
+      </div>
+      <div class="tip"><strong>Rule:</strong> Clear niche = better growth.</div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">2. Stay Consistent</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">All your posts should feel the same.</p>
+      <div class="pills" style="margin-bottom:1.2rem;">
+        <div class="pill"><span class="ck">✓</span> Same type of clips</div>
+        <div class="pill"><span class="ck">✓</span> Same vibe</div>
+        <div class="pill"><span class="ck">✓</span> Same message</div>
+      </div>
+      <div class="tip"><strong>Rule:</strong> If someone watches 3 videos, they should understand your page instantly.</div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">3. Clear Positioning</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Ask yourself: <em style="color:var(--text);font-style:normal;">what is this page about?</em> If the answer isn't obvious, fix it.</p>
+      <div class="split-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:1.5rem;">
+        <div class="card good"><div style="font-size:11px;text-transform:uppercase;letter-spacing:0.12em;color:var(--green);margin-bottom:0.6rem;">Luxury</div><div style="font-size:14px;">Luxury clips only</div></div>
+        <div class="card good"><div style="font-size:11px;text-transform:uppercase;letter-spacing:0.12em;color:var(--green);margin-bottom:0.6rem;">Money</div><div style="font-size:14px;">Money content only</div></div>
+        <div class="card good"><div style="font-size:11px;text-transform:uppercase;letter-spacing:0.12em;color:var(--green);margin-bottom:0.6rem;">Growth</div><div style="font-size:14px;">Viral tips only</div></div>
+      </div>
+      <div class="tip"><strong>Rule:</strong> No confusion.</div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">4. Content Direction</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Stick to a style. Don't go off-track.</p>
+      <div class="split-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:1.5rem;">
+        <div class="card">
+          <div class="card-label" style="color:var(--gold);font-size:11px;letter-spacing:0.12em;">Larping</div>
+          <div class="item-row" style="font-size:14px;border-color:var(--border);">🚗 Cars</div>
+          <div class="item-row" style="font-size:14px;border-color:var(--border);">⌚ Watches</div>
+          <div class="item-row" style="font-size:14px;border-bottom:none;">✨ Lifestyle edits</div>
+        </div>
+        <div class="card">
+          <div class="card-label" style="color:var(--gold);font-size:11px;letter-spacing:0.12em;">Money</div>
+          <div class="item-row" style="font-size:14px;border-color:var(--border);">💼 Hustle content</div>
+          <div class="item-row" style="font-size:14px;border-color:var(--border);">💸 Online income</div>
+          <div class="item-row" style="font-size:14px;border-bottom:none;">🧠 Success mindset</div>
+        </div>
+        <div class="card">
+          <div class="card-label" style="color:var(--gold);font-size:11px;letter-spacing:0.12em;">Growth</div>
+          <div class="item-row" style="font-size:14px;border-color:var(--border);">🔥 Viral tips</div>
+          <div class="item-row" style="font-size:14px;border-color:var(--border);">🎬 Content advice</div>
+          <div class="item-row" style="font-size:14px;border-bottom:none;">📊 Page building</div>
+        </div>
+      </div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">5. Make It Recognizable</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Your content should feel familiar every time.</p>
+      <div class="pills" style="margin-bottom:1.2rem;">
+        <div class="pill"><span class="ck">✓</span> Same format</div>
+        <div class="pill"><span class="ck">✓</span> Same style</div>
+        <div class="pill"><span class="ck">✓</span> Same structure</div>
+      </div>
+      <div class="tip"><strong>Rule:</strong> People should recognize your videos without even checking the name.</div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">6. Avoid Random Posting</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">This kills growth.</p>
+      <div class="pills" style="margin-bottom:1.2rem;">
+        <div class="pill bad">✗ Posting anything</div>
+        <div class="pill bad">✗ Jumping trends that don't fit</div>
+        <div class="pill bad">✗ Mixing unrelated content</div>
+      </div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">7. Think Like a Viewer</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">When someone lands on your page, they should instantly know:</p>
+      <div class="split-grid" style="grid-template-columns:1fr 1fr;margin-bottom:1.5rem;">
+        <div class="card" style="display:flex;align-items:flex-start;gap:12px;">
+          <div style="width:32px;height:32px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;">1</div>
+          <div><div style="font-weight:500;margin-bottom:0.25rem;">What they'll get</div><div style="font-size:13px;color:var(--muted);">Your content type is instantly obvious</div></div>
+        </div>
+        <div class="card" style="display:flex;align-items:flex-start;gap:12px;">
+          <div style="width:32px;height:32px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;">2</div>
+          <div><div style="font-weight:500;margin-bottom:0.25rem;">Why they should follow</div><div style="font-size:13px;color:var(--muted);">Your value is clear from the start</div></div>
+        </div>
+      </div>
+      <div class="core-rule" style="margin-bottom:4rem;">
+        <div class="cr-label">Core Rule</div>
+        <h3>If it's not clear → it's too unclear. Fix it.</h3>
+        <div class="cr-items">
+          <div class="cr-item"><strong>One Niche</strong><span>Pick it & own it</span></div>
+          <div class="cr-item"><strong>Stay Consistent</strong><span>Same vibe, always</span></div>
+          <div class="cr-item"><strong>Think Viewer</strong><span>2 seconds to get it</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUB-TAB: TRUST & RULES -->
+  <div id="sub-trust" class="subtab-content">
+    <div class="container">
+      <div class="section-header" style="padding-top:2.5rem;">
+        <div class="section-num">03 — Trust & Rules</div>
+        <div class="section-title">Account Trust<br>& Setup Rules</div>
+        <div class="section-desc">Follow these rules from day one. Trust is built slowly and lost fast.</div>
+      </div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">1. Warm Up New Accounts</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Don't post instantly. Do this first:</p>
+      <div class="pills" style="margin-bottom:1.2rem;">
+        <div class="pill"><span class="ck">✓</span> Scroll for a bit</div>
+        <div class="pill"><span class="ck">✓</span> Like some videos</div>
+        <div class="pill"><span class="ck">✓</span> Follow a few accounts</div>
+      </div>
+      <div class="tip"><strong>Rule:</strong> Makes the account look real.</div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">2. Don't Spam</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Act normal. Space things out.</p>
+      <div class="split-grid">
+        <div class="card bad">
+          <div class="card-label b">Avoid</div>
+          <div class="item-row b"><span class="ic">✗</span> Posting 10+ videos instantly</div>
+          <div class="item-row b"><span class="ic">✗</span> Mass following / unfollowing</div>
+          <div class="item-row b"><span class="ic">✗</span> Spamming comments</div>
+          <div class="item-row b"><span class="ic">✗</span> Multiple accounts at once</div>
+        </div>
+        <div class="card good">
+          <div class="card-label g">Do Instead</div>
+          <div class="item-row g"><span class="ic">✓</span> Act normal</div>
+          <div class="item-row g"><span class="ic">✓</span> Space things out</div>
+          <div class="item-row g"><span class="ic">✓</span> Build gradually</div>
+        </div>
+      </div>
+      <div class="tip"><strong>Rule:</strong> Spam = lower trust score.</div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">3. Post Like a Real User</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Not robotic. Natural and consistent.</p>
+      <div class="pills" style="margin-bottom:1.5rem;">
+        <div class="pill"><span class="ck">✓</span> 1–3 posts per day</div>
+        <div class="pill"><span class="ck">✓</span> Consistent timing</div>
+        <div class="pill"><span class="ck">✓</span> Normal behaviour</div>
+      </div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">4. Don't Switch Niches</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Once you pick a niche — stay there.</p>
+      <div class="pills" style="margin-bottom:1.2rem;">
+        <div class="pill bad">✗ Switching topics</div>
+        <div class="pill bad">✗ Random content changes</div>
+      </div>
+      <div class="tip"><strong>Rule:</strong> Switching resets your momentum.</div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">5. Limit Accounts (At First)</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Don't run too many at once. Too many = poor focus.</p>
+      <div class="pills" style="margin-bottom:1.5rem;">
+        <div class="pill"><span class="ck">✓</span> Start with 1–2 accounts</div>
+        <div class="pill"><span class="ck">✓</span> Learn what works</div>
+        <div class="pill"><span class="ck">✓</span> Then scale later</div>
+      </div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">6. Avoid Risky Behaviour</div>
+      <div class="split-grid" style="margin-bottom:1.5rem;">
+        <div class="card bad">
+          <div class="card-label b">Risky</div>
+          <div class="item-row b"><span class="ic">✗</span> Reposting stolen content</div>
+          <div class="item-row b"><span class="ic">✗</span> Watermarked clips</div>
+          <div class="item-row b"><span class="ic">✗</span> Low-quality spam</div>
+        </div>
+        <div class="card good">
+          <div class="card-label g">Safe</div>
+          <div class="item-row g"><span class="ic">✓</span> Clean edits</div>
+          <div class="item-row g"><span class="ic">✓</span> Original-looking content</div>
+        </div>
+      </div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">7. Keep It Consistent</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Consistency builds trust over time.</p>
+      <div class="pills" style="margin-bottom:1.5rem;">
+        <div class="pill"><span class="ck">✓</span> Same niche</div>
+        <div class="pill"><span class="ck">✓</span> Same style</div>
+        <div class="pill"><span class="ck">✓</span> Same posting habit</div>
+      </div>
+      <div class="core-rule" style="margin-bottom:4rem;">
+        <div class="cr-label">Core Rule</div>
+        <h3>Trust is built slowly and lost fast. Don't rush it.</h3>
+        <div class="cr-items">
+          <div class="cr-item"><strong>Warm Up</strong><span>Act real from day one</span></div>
+          <div class="cr-item"><strong>No Spam</strong><span>Space everything out</span></div>
+          <div class="cr-item"><strong>Stay Consistent</strong><span>Same niche, always</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DON'T REINVENT THE WHEEL PAGE -->
+<div id="page-reinvent" class="page">
+  <div class="subtab-bar">
+    <div class="container">
+      <div class="subtabs">
+        <button class="subtab active" data-sub="viral" onclick="showSubTab2('viral')">Finding Viral Content</button>
+        <button class="subtab" data-sub="twist" onclick="showSubTab2('twist')">Recreate With a Twist</button>
+        <button class="subtab" data-sub="scale" onclick="showSubTab2('scale')">Scaling Winners</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="sub2-viral" class="subtab-content active">
+    <div class="container">
+      <div class="section-header" style="padding-top:2.5rem;">
+        <div class="section-num">01 — Don't Reinvent the Wheel</div>
+        <div class="section-title">Finding Viral Content<br>(What to Look For)</div>
+        <div class="section-desc">You don't need new ideas. You need proven ones.</div>
+      </div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">Where to Find Viral Content</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Scroll with purpose. Not randomly.</p>
+      <div class="pills" style="margin-bottom:1.5rem;">
+        <div class="pill"><span class="ck">✓</span> TikTok For You Page</div>
+        <div class="pill"><span class="ck">✓</span> Pages in your niche</div>
+        <div class="pill"><span class="ck">✓</span> Smaller pages going viral <span style="color:var(--gold);font-size:11px;margin-left:4px;">best source</span></div>
+      </div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">What to Look For</div>
+      <div class="split-grid">
+        <div class="card good">
+          <div class="card-label g">Look For</div>
+          <div class="item-row g"><span class="ic">✓</span> 100k+ views minimum</div>
+          <div class="item-row g"><span class="ic">✓</span> High likes + comments</div>
+          <div class="item-row g"><span class="ic">✓</span> Posted recently (still working)</div>
+          <div class="item-row g"><span class="ic">✓</span> Simple concept you can remake</div>
+        </div>
+        <div class="card bad">
+          <div class="card-label b">Avoid</div>
+          <div class="item-row b"><span class="ic">✗</span> Old viral posts</div>
+          <div class="item-row b"><span class="ic">✗</span> Complicated edits</div>
+          <div class="item-row b"><span class="ic">✗</span> One-off lucky videos</div>
+        </div>
+      </div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">Find Repeatable Formats</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Don't focus on one video. Look for patterns.</p>
+      <div class="pills" style="margin-bottom:1.2rem;">
+        <div class="pill"><span class="ck">✓</span> Same type of video blowing up</div>
+        <div class="pill"><span class="ck">✓</span> Same hook style</div>
+        <div class="pill"><span class="ck">✓</span> Same structure across posts</div>
+      </div>
+      <div class="tip"><strong>Rule:</strong> If you see it multiple times, it works.</div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">Focus on Simple Ideas</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Best viral content is simple.</p>
+      <div class="pills" style="margin-bottom:1.2rem;">
+        <div class="pill"><span class="ck">✓</span> Easy to understand</div>
+        <div class="pill"><span class="ck">✓</span> Easy to recreate</div>
+        <div class="pill"><span class="ck">✓</span> Clear concept</div>
+      </div>
+      <div class="tip"><strong>Rule:</strong> If it's hard to remake → skip it.</div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">Save Everything</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">When you find something good, build your own idea bank.</p>
+      <div class="pills" style="margin-bottom:1.5rem;">
+        <div class="pill"><span class="ck">✓</span> Save it</div>
+        <div class="pill"><span class="ck">✓</span> Screenshot it</div>
+        <div class="pill"><span class="ck">✓</span> Keep it organised</div>
+      </div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">Look at Small Creators</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Big pages can go viral anytime. Small pages are better signals.</p>
+      <div class="split-grid">
+        <div class="card good">
+          <div class="card-label g">Small page goes viral</div>
+          <div class="item-row g"><span class="ic">✓</span> Strong idea</div>
+          <div class="item-row g"><span class="ic">✓</span> Content carried it — not followers</div>
+          <div class="item-row g"><span class="ic">✓</span> Safe to recreate</div>
+        </div>
+        <div class="card" style="display:flex;flex-direction:column;justify-content:center;text-align:center;padding:1.5rem;">
+          <div style="font-size:2.5rem;margin-bottom:0.6rem;">💡</div>
+          <div style="font-size:14px;color:var(--muted);">If a small creator blew up with it,<br>the <strong style="color:var(--text);">idea</strong> did the work.</div>
+        </div>
+      </div>
+      <div class="core-rule" style="margin-top:2rem;margin-bottom:4rem;">
+        <div class="cr-label">Core Rule</div>
+        <h3>You don't need new ideas. You need proven ones.</h3>
+        <div class="cr-items">
+          <div class="cr-item"><strong>Find Patterns</strong><span>Same format = works</span></div>
+          <div class="cr-item"><strong>Stay Simple</strong><span>Easy to remake wins</span></div>
+          <div class="cr-item"><strong>Save Ideas</strong><span>Build your bank</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="sub2-twist" class="subtab-content">
+    <div class="container">
+      <div class="section-header" style="padding-top:2.5rem;">
+        <div class="section-num">02 — Don't Reinvent the Wheel</div>
+        <div class="section-title">Recreate With a Twist</div>
+        <div class="section-desc">Take what works. Make it yours. Don't copy — improve.</div>
+      </div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">1. Keep the Core Idea</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Take what made it work. Do not change the foundation.</p>
+      <div class="pills" style="margin-bottom:1.5rem;">
+        <div class="pill"><span class="ck">✓</span> Hook style</div>
+        <div class="pill"><span class="ck">✓</span> Structure (start → middle → end)</div>
+        <div class="pill"><span class="ck">✓</span> Format (POV, montage, text style)</div>
+      </div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">2. Swap the Assets</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Same idea → new visuals. Make it yours.</p>
+      <div class="split-grid">
+        <div class="card good">
+          <div class="card-label g">Swap These</div>
+          <div class="item-row g"><span class="ic">✓</span> New clips</div>
+          <div class="item-row g"><span class="ic">✓</span> Different angles</div>
+          <div class="item-row g"><span class="ic">✓</span> New locations</div>
+          <div class="item-row g"><span class="ic">✓</span> Different sequence</div>
+        </div>
+        <div class="card" style="display:flex;flex-direction:column;justify-content:center;text-align:center;padding:1.5rem;">
+          <div style="font-size:2.5rem;margin-bottom:0.6rem;">🔄</div>
+          <div style="font-size:14px;color:var(--muted);">Same proven idea,<br><strong style="color:var(--text);">completely new visuals.</strong></div>
+        </div>
+      </div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">3. Rewrite the Text</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Keep the message, change the words. Don't copy text 1:1.</p>
+      <div class="pills" style="margin-bottom:1.2rem;">
+        <div class="pill"><span class="ck">✓</span> Same meaning</div>
+        <div class="pill"><span class="ck">✓</span> Different phrasing</div>
+        <div class="pill"><span class="ck">✓</span> Cleaner, shorter lines</div>
+      </div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">4. Match the Energy</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Energy mismatch kills performance. Keep the same feel.</p>
+      <div class="energy-grid">
+        <div class="energy-card"><span class="arrow">→</span><span>Fast original → <strong>Keep it fast</strong></span></div>
+        <div class="energy-card"><span class="arrow">→</span><span>Dark original → <strong>Keep it dark</strong></span></div>
+        <div class="energy-card"><span class="arrow">→</span><span>High-energy → <strong>Keep it high-energy</strong></span></div>
+      </div>
+      <div class="tip"><strong>Rule:</strong> If the vibe is off, the video won't perform.</div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">5. Improve the First 2 Seconds</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Upgrade the hook. Small improvement here = big difference.</p>
+      <div class="pills" style="margin-bottom:1.5rem;">
+        <div class="pill"><span class="ck">✓</span> Stronger first clip</div>
+        <div class="pill"><span class="ck">✓</span> Clearer text</div>
+        <div class="pill"><span class="ck">✓</span> Faster entry</div>
+      </div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">6. Tighten the Edit</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Don't just match the original — beat it.</p>
+      <div class="split-grid">
+        <div class="card good">
+          <div class="card-label g">Do This</div>
+          <div class="item-row g"><span class="ic">✓</span> Shorter clips</div>
+          <div class="item-row g"><span class="ic">✓</span> Better pacing</div>
+          <div class="item-row g"><span class="ic">✓</span> No dead frames</div>
+        </div>
+        <div class="card bad">
+          <div class="card-label b">Not This</div>
+          <div class="item-row b"><span class="ic">✗</span> Copy the exact length</div>
+          <div class="item-row b"><span class="ic">✗</span> Keep slow moments in</div>
+          <div class="item-row b"><span class="ic">✗</span> Match it and stop there</div>
+        </div>
+      </div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">7. Change One Variable Per Version</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">When testing — don't change everything at once.</p>
+      <div class="version-grid">
+        <div class="version-card"><div class="v-label">Version A</div><div class="v-title">New Hook Text</div><div class="v-desc">Same video, different opening line</div></div>
+        <div class="version-card"><div class="v-label">Version B</div><div class="v-title">Different First Clip</div><div class="v-desc">Swap the opening visual only</div></div>
+        <div class="version-card"><div class="v-label">Version C</div><div class="v-title">Faster Pacing</div><div class="v-desc">Same content, tighter cuts</div></div>
+      </div>
+      <div class="tip"><strong>Rule:</strong> One change at a time = you know what actually worked.</div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">8. Avoid Obvious Copies</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Feels familiar — not identical. That's the goal.</p>
+      <div class="split-grid">
+        <div class="card bad">
+          <div class="card-label b">Too Close</div>
+          <div class="item-row b"><span class="ic">✗</span> Same clips + same order</div>
+          <div class="item-row b"><span class="ic">✗</span> Same exact text</div>
+          <div class="item-row b"><span class="ic">✗</span> Looks identical</div>
+        </div>
+        <div class="card good">
+          <div class="card-label g">The Goal</div>
+          <div class="item-row g"><span class="ic">✓</span> Same structure, new assets</div>
+          <div class="item-row g"><span class="ic">✓</span> Same energy, new words</div>
+          <div class="item-row g"><span class="ic">✓</span> Feels familiar, not copied</div>
+        </div>
+      </div>
+      <div class="core-rule" style="margin-top:2rem;margin-bottom:4rem;">
+        <div class="cr-label">Core Rule</div>
+        <h3>Take what works. Make it yours. Don't copy — improve.</h3>
+        <div class="cr-items">
+          <div class="cr-item"><strong>Keep Structure</strong><span>Foundation stays</span></div>
+          <div class="cr-item"><strong>Swap Assets</strong><span>New visuals, new text</span></div>
+          <div class="cr-item"><strong>Beat It</strong><span>Cleaner than the original</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="sub2-scale" class="subtab-content">
+    <div class="container">
+      <div class="section-header" style="padding-top:2.5rem;">
+        <div class="section-num">03 — Don't Reinvent the Wheel</div>
+        <div class="section-title">Scaling Winners<br>(Turn One Idea Into Many)</div>
+        <div class="section-desc">One good idea isn't the end. It's the starting point.</div>
+      </div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">1. If It Works — Repeat It</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Don't move on after one post. Run it again.</p>
+      <div class="pills" style="margin-bottom:1.5rem;">
+        <div class="pill"><span class="ck">✓</span> Same idea</div>
+        <div class="pill"><span class="ck">✓</span> New clips</div>
+        <div class="pill"><span class="ck">✓</span> Same structure</div>
+      </div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">2. Make Variations</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Take 1 idea → make multiple versions. Post all of them.</p>
+      <div class="version-grid">
+        <div class="version-card"><div class="v-label">Change</div><div class="v-title">First Clip</div><div class="v-desc">Swap the opening visual</div></div>
+        <div class="version-card"><div class="v-label">Change</div><div class="v-title">Hook Text</div><div class="v-desc">New opening line, same format</div></div>
+        <div class="version-card"><div class="v-label">Change</div><div class="v-title">Clip Order</div><div class="v-desc">Rearrange the sequence</div></div>
+      </div>
+      <div class="pills" style="margin-bottom:1.5rem;"><div class="pill"><span class="ck">✓</span> Pacing</div></div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">3. Double Down on Winners</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">If one version performs — don't stop early.</p>
+      <div class="split-grid">
+        <div class="card good">
+          <div class="card-label g">When It Hits</div>
+          <div class="item-row g"><span class="ic">✓</span> Recreate it again</div>
+          <div class="item-row g"><span class="ic">✓</span> Make more versions</div>
+          <div class="item-row g"><span class="ic">✓</span> Keep the same formula</div>
+        </div>
+        <div class="card" style="display:flex;flex-direction:column;justify-content:center;text-align:center;padding:1.5rem;">
+          <div style="font-size:2.5rem;margin-bottom:0.6rem;">🏆</div>
+          <div style="font-size:14px;color:var(--muted);">A winning format is an<br><strong style="color:var(--text);">asset. Milk it.</strong></div>
+        </div>
+      </div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">4. Build a System</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">No guessing. Always have a pipeline ready.</p>
+      <div class="pills" style="margin-bottom:1.5rem;">
+        <div class="pill"><span class="ck">✓</span> Saved viral videos</div>
+        <div class="pill"><span class="ck">✓</span> Formats ready</div>
+        <div class="pill"><span class="ck">✓</span> Ideas queued</div>
+      </div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">5. Volume Over Perfection</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">You don't need 1 perfect video. More posts = more chances.</p>
+      <div class="split-grid">
+        <div class="card good">
+          <div class="card-label g">You Need</div>
+          <div class="item-row g"><span class="ic">✓</span> Multiple attempts</div>
+          <div class="item-row g"><span class="ic">✓</span> Consistent posting</div>
+          <div class="item-row g"><span class="ic">✓</span> Repeated formats</div>
+        </div>
+        <div class="card bad">
+          <div class="card-label b">Not This</div>
+          <div class="item-row b"><span class="ic">✗</span> Waiting for the perfect video</div>
+          <div class="item-row b"><span class="ic">✗</span> Posting once and stopping</div>
+          <div class="item-row b"><span class="ic">✗</span> Over-editing one clip</div>
+        </div>
+      </div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">6. Stay in Winning Formats</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Stick to what works. Don't wander.</p>
+      <div class="pills" style="margin-bottom:1.2rem;">
+        <div class="pill bad">✗ Switching ideas every post</div>
+        <div class="pill bad">✗ Trying random concepts</div>
+      </div>
+      <div class="tip"><strong>Rule:</strong> If the format is working — stay in it.</div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">7. Stack Results</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Each post builds on the last. Consistency compounds.</p>
+      <div class="split-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:1.5rem;">
+        <div class="card" style="text-align:center;padding:1.4rem 1rem;"><div style="font-size:1.8rem;margin-bottom:0.6rem;">📊</div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;margin-bottom:0.3rem;">More Data</div><div style="font-size:12px;color:var(--muted);">You learn what actually works</div></div>
+        <div class="card" style="text-align:center;padding:1.4rem 1rem;border-color:var(--gold-dim);"><div style="font-size:1.8rem;margin-bottom:0.6rem;">🧠</div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;margin-bottom:0.3rem;">Better Understanding</div><div style="font-size:12px;color:var(--muted);">Patterns become obvious</div></div>
+        <div class="card" style="text-align:center;padding:1.4rem 1rem;"><div style="font-size:1.8rem;margin-bottom:0.6rem;">🔥</div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;margin-bottom:0.3rem;">Higher Viral Chance</div><div style="font-size:12px;color:var(--muted);">More shots = more hits</div></div>
+      </div>
+      <div class="core-rule" style="margin-bottom:4rem;">
+        <div class="cr-label">Core Rule</div>
+        <h3>One good idea isn't the end. It's the starting point.</h3>
+        <div class="cr-items">
+          <div class="cr-item"><strong>Repeat It</strong><span>Run winners again</span></div>
+          <div class="cr-item"><strong>Vary It</strong><span>Multiple versions always</span></div>
+          <div class="cr-item"><strong>Stack It</strong><span>Consistency compounds</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- THE START PAGE -->
+<div id="page-thestart" class="page">
+  <div class="hero" style="padding:4rem 2rem 4rem;">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-eyebrow">Kirbs Larps Agency</div>
+    <h1 style="font-size:clamp(2rem,5vw,3.5rem);">The <em>Start</em></h1>
+    <p class="hero-sub">The three things that actually move the needle. Learn these first.</p>
+  </div>
+  <div class="container" style="padding-top:3.5rem;padding-bottom:5rem;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;">
+      <div class="card" style="padding:0;overflow:hidden;cursor:pointer;transition:border-color 0.2s,transform 0.2s;" onclick="showPage('goviral')" onmouseover="this.style.borderColor='#C9A84C';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='#252525';this.style.transform='translateY(0)'">
+        <div style="position:relative;min-height:180px;overflow:hidden;">
+          <img src="https://cdn.discordapp.com/attachments/1497818311944175752/1498586196702400632/51e4af9167404bf38cbc6589751009994712490357244d8f82b4adcb3e3d7523.png?ex=69f1b2a7&is=69f06127&hm=32313a399b76be8bdeb6fa9a93b8dbb2e2294882b102a006f0cad8ae6f9fcaa4&" alt="How to Go Viral" style="width:100%;height:180px;object-fit:cover;display:block;">
+        </div>
+        <div style="padding:1.2rem 1.3rem;">
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:0.4rem;">How to Go Viral</div>
+          <div style="font-size:13.5px;color:var(--muted);line-height:1.55;">Learn the basics of what actually makes a video go viral.</div>
+        </div>
+      </div>
+      <div class="card" style="padding:0;overflow:hidden;cursor:pointer;transition:border-color 0.2s,transform 0.2s;" onclick="showPage('farmengagement')" onmouseover="this.style.borderColor='#C9A84C';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='#252525';this.style.transform='translateY(0)'">
+        <div style="position:relative;min-height:180px;overflow:hidden;">
+          <img src="https://media.discordapp.net/attachments/1204710356539150357/1498585760608288779/40ea49484f8e4346b828299d711cee6110214c3bb740491a89b54877ea40d1e8.png?ex=69f1b23f&is=69f060bf&hm=64f8c8c5e75cd0f9e33b59d5087cf89cd40fc2d97f3827fb52553b3f44643943&=&format=webp&quality=lossless" alt="How to Farm Engagement" style="width:100%;height:180px;object-fit:cover;display:block;">
+        </div>
+        <div style="padding:1.2rem 1.3rem;">
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:0.4rem;">How to Farm Engagement</div>
+          <div style="font-size:13.5px;color:var(--muted);line-height:1.55;">Learn the ultimate tips and secrets to farming engagement on each post!</div>
+        </div>
+      </div>
+      <!-- VIDEO OPTIMIZATION CARD — now links to page-videoopt -->
+      <div class="card" style="padding:0;overflow:hidden;cursor:pointer;transition:border-color 0.2s,transform 0.2s;" onclick="showPage('videoopt')" onmouseover="this.style.borderColor='#C9A84C';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='#252525';this.style.transform='translateY(0)'">
+        <div style="position:relative;min-height:180px;overflow:hidden;">
+          <img src="https://cdn.discordapp.com/attachments/1204710356539150357/1498586492463747082/cf889fc46b3c4dc2a6de11fabb7daeab15b7a2b049f34070bf79c22fa654f856.png?ex=69f1b2ee&is=69f0616e&hm=d6acde5330fe379612a59e4357474c06af24223eb3799f9e5ad4a240b771dd19&" alt="Video Optimization" style="width:100%;height:180px;object-fit:cover;display:block;">
+        </div>
+        <div style="padding:1.2rem 1.3rem;">
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:0.4rem;">Video Optimization</div>
+          <div style="font-size:13.5px;color:var(--muted);line-height:1.55;">Learn how to optimize your videos to their full potential so it gets the reach it deserves.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW TO GO VIRAL PAGE -->
+<div id="page-goviral" class="page">
+  <div class="subtab-bar">
+    <div class="container">
+      <div style="display:flex;align-items:center;gap:0;">
+        <button onclick="showPage('thestart')" style="height:52px;padding:0 1.1rem;background:none;border:none;border-right:1px solid var(--border);color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;display:flex;align-items:center;gap:6px;transition:color 0.2s;flex-shrink:0;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">← Back</button>
+        <div class="subtabs">
+          <button class="subtab active" data-sub3="psychology" onclick="showSubTab3('psychology')">Viral Psychology</button>
+          <button class="subtab" data-sub3="anatomy" onclick="showSubTab3('anatomy')">Anatomy of a Viral Video</button>
+          <button class="subtab" data-sub3="ideas" onclick="showSubTab3('ideas')">Content Ideas That Blow Up</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="sub3-psychology" class="subtab-content active">
+    <div class="container">
+      <div class="section-header" style="padding-top:2.5rem;">
+        <div class="section-num">01 — How to Go Viral</div>
+        <div class="section-title">Viral Psychology<br>— Why People Stop Scrolling</div>
+        <div class="section-desc">Virality starts with attention. If people don't stop scrolling, nothing else matters.</div>
+      </div>
+      <div class="vp-intro">
+        <p>Most viral videos trigger one or more of these psychological levers.</p>
+        <p>Master these and you understand why content spreads — and how to make yours do the same.</p>
+      </div>
+      <div class="section-title" style="font-size:1.1rem;margin-bottom:1rem;letter-spacing:0.08em;font-size:11px;text-transform:uppercase;color:var(--gold);">The 5 Viral Triggers</div>
+      <div class="triggers-grid">
+        <div class="trigger-card">
+          <div class="trigger-header"><div class="trigger-num">1</div><div class="trigger-name">Curiosity</div></div>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:0.7rem;">Create a reason to keep watching.</p>
+          <ul class="trigger-bullets">
+            <li>Unexpected outcomes</li><li>Open loops ("wait for it" moments)</li><li>Questions people need answered</li><li>Teasing a payoff without giving it away</li><li>Making viewers wonder what happens next</li>
+          </ul>
+          <div class="trigger-why">↑ Curiosity increases watch time</div>
+        </div>
+        <div class="trigger-card">
+          <div class="trigger-header"><div class="trigger-num">2</div><div class="trigger-name">Relatability</div></div>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:0.7rem;">People engage with content they see themselves in.</p>
+          <ul class="trigger-bullets">
+            <li>Common struggles</li><li>Everyday thoughts people don't say out loud</li><li>"This is literally me" moments</li><li>Shared experiences</li><li>Content people send to friends</li>
+          </ul>
+          <div class="trigger-why">↑ Drives comments, shares, and rewatches</div>
+        </div>
+        <div class="trigger-card">
+          <div class="trigger-header"><div class="trigger-num">3</div><div class="trigger-name">Shock & Surprise</div></div>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:0.7rem;">The unexpected stops the scroll.</p>
+          <ul class="trigger-bullets">
+            <li>A bold statement</li><li>A crazy result</li><li>A surprising twist</li><li>Unusual visuals</li><li>Breaking expectations early</li>
+          </ul>
+          <div class="trigger-why">↑ Surprise grabs attention fast</div>
+        </div>
+        <div class="trigger-card">
+          <div class="trigger-header"><div class="trigger-num">4</div><div class="trigger-name">Aspiration</div></div>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:0.7rem;">People watch what they want.</p>
+          <ul class="trigger-bullets">
+            <li>Money</li><li>Lifestyle</li><li>Success</li><li>Freedom</li><li>Status</li><li>Transformation</li>
+          </ul>
+          <div class="trigger-why">↑ Creates saves and repeat views</div>
+        </div>
+        <div class="trigger-card">
+          <div class="trigger-header"><div class="trigger-num">5</div><div class="trigger-name">Emotion</div></div>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:0.7rem;">Emotion fuels engagement.</p>
+          <ul class="trigger-bullets">
+            <li>Excitement</li><li>Nostalgia</li><li>Motivation</li><li>Tension</li><li>Humor</li><li>Debate / controversy</li>
+          </ul>
+          <div class="trigger-why">↑ People share what makes them feel something</div>
+        </div>
+      </div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:1rem;">Why People Share Content</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Shares often lead to virality. People share videos when they:</p>
+      <div class="vp-two-col">
+        <div class="vp-info-card">
+          <h4>Share triggers</h4>
+          <ul><li>Relate to it</li><li>Want a friend to see it</li><li>Think it will get a reaction</li><li>Want to start a conversation</li><li>Feel it's too good not to send</li></ul>
+        </div>
+        <div class="vp-info-card">
+          <h4>Pattern interrupts</h4>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:0.7rem;">Viral videos often break scrolling patterns.</p>
+          <ul><li>Strong first frame</li><li>Unexpected opening line</li><li>Different visuals</li><li>Fast movement</li><li>Something confusing enough to make people pause</li></ul>
+          <div class="vp-payoff-note">Different gets attention.</div>
+        </div>
+      </div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">Payoff Matters</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">People keep watching when something is coming. No payoff = low retention.</p>
+      <div class="vp-two-col">
+        <div class="vp-info-card">
+          <h4>Strong payoffs</h4>
+          <ul><li>Reveals</li><li>Twists</li><li>Results</li><li>Before and afters</li><li>Big endings</li></ul>
+          <div class="vp-payoff-note">↑ High retention = more reach</div>
+        </div>
+        <div class="vp-info-card" style="display:flex;flex-direction:column;justify-content:center;">
+          <h4>The rule</h4>
+          <p style="font-size:14px;color:var(--muted);line-height:1.6;">If a small creator blew up with a video, the <strong style="color:var(--text);">idea</strong> did the work — not the followers. That's why payoff-driven content levels the playing field.</p>
+        </div>
+      </div>
+      <div class="div"></div>
+      <div class="four-things-bar">
+        <p>The 4 things viral content does</p>
+        <div class="four-pills">
+          <div class="pill-gold"><span class="ck">✔</span> Makes people stop</div>
+          <div class="pill-gold"><span class="ck">✔</span> Makes people stay</div>
+          <div class="pill-gold"><span class="ck">✔</span> Makes people feel</div>
+          <div class="pill-gold"><span class="ck">✔</span> Makes people share</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="sub3-anatomy" class="subtab-content">
+    <div class="container">
+      <div class="section-header" style="padding-top:2.5rem;">
+        <div class="section-num">02 — How to Go Viral</div>
+        <div class="section-title">The Anatomy of<br>a Viral Video</div>
+        <div class="section-desc">Viral videos are rarely random. Most high-performing posts have the same core structure.</div>
+      </div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">1. The Hook (First 1–3 Seconds)</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">This is the most important part of the video. If the hook fails, the video usually fails.</p>
+      <div class="split-grid">
+        <div class="card good">
+          <div class="card-label g">Strong Hooks</div>
+          <div class="item-row g"><span class="ic">✓</span> Creates curiosity</div>
+          <div class="item-row g"><span class="ic">✓</span> Shows the payoff early</div>
+          <div class="item-row g"><span class="ic">✓</span> Starts in the middle of action</div>
+          <div class="item-row g"><span class="ic">✓</span> Makes a bold statement</div>
+          <div class="item-row g"><span class="ic">✓</span> Shows something unexpected</div>
+          <div class="item-row g"><span class="ic">✓</span> Gives viewers a reason to stay</div>
+        </div>
+        <div class="card bad">
+          <div class="card-label b">Weak Hooks</div>
+          <div class="item-row b"><span class="ic">✗</span> Long intros</div>
+          <div class="item-row b"><span class="ic">✗</span> Slow build-ups</div>
+          <div class="item-row b"><span class="ic">✗</span> Explaining too much upfront</div>
+          <div class="item-row b"><span class="ic">✗</span> Generic openings</div>
+        </div>
+      </div>
+      <div class="tip"><strong>Goal:</strong> Make people stop scrolling instantly.</div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">2. Retention</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Virality depends on how long people stay.</p>
+      <div class="split-grid">
+        <div class="card good">
+          <div class="card-label g">Improves Retention</div>
+          <div class="item-row g"><span class="ic">✓</span> Fast pacing</div>
+          <div class="item-row g"><span class="ic">✓</span> Removing dead space</div>
+          <div class="item-row g"><span class="ic">✓</span> Constant visual movement</div>
+          <div class="item-row g"><span class="ic">✓</span> Story progression</div>
+          <div class="item-row g"><span class="ic">✓</span> Open loops</div>
+          <div class="item-row g"><span class="ic">✓</span> Quick scene changes</div>
+        </div>
+        <div class="card bad">
+          <div class="card-label b">Retention Killers</div>
+          <div class="item-row b"><span class="ic">✗</span> Repetition</div>
+          <div class="item-row b"><span class="ic">✗</span> Talking too long without payoff</div>
+          <div class="item-row b"><span class="ic">✗</span> Slow starts</div>
+          <div class="item-row b"><span class="ic">✗</span> Boring middle sections</div>
+        </div>
+      </div>
+      <div class="div"></div>
+      <div class="four-things-bar" style="margin-bottom:1.5rem;">
+        <p>Core Structure of Strong Videos</p>
+        <div class="four-pills">
+          <div class="pill-gold"><span class="ck">✔</span> Strong Hook</div>
+          <div class="pill-gold"><span class="ck">✔</span> High Retention</div>
+          <div class="pill-gold"><span class="ck">✔</span> Fast Pacing</div>
+          <div class="pill-gold"><span class="ck">✔</span> Clear Payoff</div>
+          <div class="pill-gold"><span class="ck">✔</span> Rewatch Value</div>
+          <div class="pill-gold"><span class="ck">✔</span> Shareability</div>
+        </div>
+      </div>
+      <div class="core-rule" style="margin-bottom:4rem;">
+        <div class="cr-label">Core Rule</div>
+        <h3>Miss one — performance can drop. Stack several — odds of virality go up.</h3>
+        <div class="cr-items">
+          <div class="cr-item"><strong>Hook First</strong><span>Stop the scroll</span></div>
+          <div class="cr-item"><strong>Hold Them</strong><span>Retention = reach</span></div>
+          <div class="cr-item"><strong>Deliver</strong><span>Payoff earns shares</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="sub3-ideas" class="subtab-content">
+    <div class="container">
+      <div class="section-header" style="padding-top:2.5rem;">
+        <div class="section-num">03 — How to Go Viral</div>
+        <div class="section-title">Content Ideas<br>That Blow Up</div>
+        <div class="section-desc">Seven proven content categories that consistently perform.</div>
+      </div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">1. Aspirational Content</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Content people wish was their life.</p>
+      <div class="pills" style="margin-bottom:1.5rem;">
+        <div class="pill"><span class="ck">✓</span> Luxury lifestyle edits</div>
+        <div class="pill"><span class="ck">✓</span> Watches, cars, travel</div>
+        <div class="pill"><span class="ck">✓</span> Money visuals</div>
+        <div class="pill"><span class="ck">✓</span> Success aesthetics</div>
+      </div>
+      <div class="tip"><strong>Rule:</strong> People engage with what they want.</div>
+      <div class="div"></div>
+      <div class="four-things-bar" style="margin-bottom:1.5rem;">
+        <p>Strong Larping Content Usually Has</p>
+        <div class="four-pills">
+          <div class="pill-gold"><span class="ck">✔</span> Aspiration</div>
+          <div class="pill-gold"><span class="ck">✔</span> Emotion</div>
+          <div class="pill-gold"><span class="ck">✔</span> Relatability</div>
+          <div class="pill-gold"><span class="ck">✔</span> Trend Leverage</div>
+          <div class="pill-gold"><span class="ck">✔</span> Reaction Potential</div>
+          <div class="pill-gold"><span class="ck">✔</span> Shareability</div>
+        </div>
+      </div>
+      <div class="core-rule" style="margin-bottom:4rem;">
+        <div class="cr-label">Core Rule</div>
+        <h3>The best larping content makes people feel something — and want to share it.</h3>
+        <div class="cr-items">
+          <div class="cr-item"><strong>Aspirational</strong><span>Show the life they want</span></div>
+          <div class="cr-item"><strong>Emotional</strong><span>Make them feel it</span></div>
+          <div class="cr-item"><strong>Shareable</strong><span>Built to be sent</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW TO FARM ENGAGEMENT PAGE -->
+<div id="page-farmengagement" class="page">
+  <div class="subtab-bar">
+    <div class="container">
+      <div style="display:flex;align-items:center;gap:0;">
+        <button onclick="showPage('thestart')" style="height:52px;padding:0 1.1rem;background:none;border:none;border-right:1px solid var(--border);color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;display:flex;align-items:center;gap:6px;transition:color 0.2s;flex-shrink:0;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">← Back</button>
+        <div class="subtabs">
+          <button class="subtab active" data-sub4="commentbait" onclick="showSubTab4('commentbait')">Comment Bait &amp; Reaction Triggers</button>
+          <button class="subtab" data-sub4="watchtime" onclick="showSubTab4('watchtime')">Watch Time &amp; Rewatch Loops</button>
+          <button class="subtab" data-sub4="sharessaves" onclick="showSubTab4('sharessaves')">Shares &amp; Saves</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="sub4-commentbait" class="subtab-content active">
+    <div class="container">
+      <div class="section-header" style="padding-top:2.5rem;">
+        <div class="section-num">01 — How to Farm Engagement</div>
+        <div class="section-title">Comment Bait<br>&amp; Reaction Triggers</div>
+        <div class="section-desc">Comments are one of the strongest engagement signals. More comments = more reach.</div>
+      </div>
+      <div class="vp-intro">
+        <p>The comment section is free distribution. Every comment tells the algorithm your content is worth pushing.</p>
+        <p>Don't wait for people to comment. Engineer it.</p>
+      </div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">1. Ask Direct Questions</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">The simplest way to get comments.</p>
+      <div class="split-grid">
+        <div class="card good">
+          <div class="card-label g">Good Examples</div>
+          <div class="item-row g"><span class="ic">✓</span> "Which do you prefer — A or B?"</div>
+          <div class="item-row g"><span class="ic">✓</span> "Comment your income goal for 2025"</div>
+          <div class="item-row g"><span class="ic">✓</span> "Drop a 🔥 if you're building"</div>
+          <div class="item-row g"><span class="ic">✓</span> "Tag someone who needs to see this"</div>
+        </div>
+        <div class="card bad">
+          <div class="card-label b">Avoid</div>
+          <div class="item-row b"><span class="ic">✗</span> Vague or generic CTAs</div>
+          <div class="item-row b"><span class="ic">✗</span> "Comment below" with no reason</div>
+          <div class="item-row b"><span class="ic">✗</span> Questions nobody cares about</div>
+        </div>
+      </div>
+      <div class="tip"><strong>Rule:</strong> Make the answer easy. One word, one emoji, one number.</div>
+      <div class="div"></div>
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">2. Reply to Every Comment (Early)</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Especially in the first hour. Replies are comments too — they double your count.</p>
+      <div class="split-grid">
+        <div class="card good">
+          <div class="card-label g">Do This</div>
+          <div class="item-row g"><span class="ic">✓</span> Reply within the first 60 minutes</div>
+          <div class="item-row g"><span class="ic">✓</span> Keep replies short and engaging</div>
+          <div class="item-row g"><span class="ic">✓</span> Ask a follow-up question back</div>
+          <div class="item-row g"><span class="ic">✓</span> Pin a strong comment to guide others</div>
+        </div>
+        <div class="card bad">
+          <div class="card-label b">Don't Do This</div>
+          <div class="item-row b"><span class="ic">✗</span> Ignore comments for 6+ hours</div>
+          <div class="item-row b"><span class="ic">✗</span> Post and disappear immediately</div>
+        </div>
+      </div>
+      <div class="core-rule" style="margin-bottom:4rem;">
+        <div class="cr-label">Core Rule</div>
+        <h3>Comments don't happen by accident. You engineer them.</h3>
+        <div class="cr-items">
+          <div class="cr-item"><strong>Ask Direct</strong><span>Easy answers = more replies</span></div>
+          <div class="cr-item"><strong>Provoke</strong><span>Opinions pull people in</span></div>
+          <div class="cr-item"><strong>Reply Fast</strong><span>Early replies double the count</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="sub4-watchtime" class="subtab-content">
+    <div class="container">
+      <div class="section-header" style="padding-top:2.5rem;">
+        <div class="section-num">02 — How to Farm Engagement</div>
+        <div class="section-title">Watch Time<br>&amp; Rewatch Loops</div>
+        <div class="section-desc">Watch time is the most important metric on short-form platforms.</div>
+      </div>
+      <div class="vp-intro">
+        <p>Platforms like TikTok and Instagram Reels track exactly how much of your video people watch.</p>
+        <p>High watch time = more distribution. Low watch time = suppressed reach.</p>
+      </div>
+      <div class="split-grid" style="margin-bottom:1.5rem;">
+        <div class="card good">
+          <div class="card-label g">What Drives Watch Time</div>
+          <div class="item-row g"><span class="ic">✓</span> A strong hook that earns the first 3 seconds</div>
+          <div class="item-row g"><span class="ic">✓</span> Open loops that delay the payoff</div>
+          <div class="item-row g"><span class="ic">✓</span> Fast pacing with no dead moments</div>
+          <div class="item-row g"><span class="ic">✓</span> An ending that makes people rewatch</div>
+        </div>
+        <div class="card bad">
+          <div class="card-label b">What Kills Watch Time</div>
+          <div class="item-row b"><span class="ic">✗</span> Slow intros or long build-ups</div>
+          <div class="item-row b"><span class="ic">✗</span> Giving the payoff too early</div>
+          <div class="item-row b"><span class="ic">✗</span> Dead frames or silent gaps</div>
+        </div>
+      </div>
+      <div class="core-rule" style="margin-bottom:4rem;">
+        <div class="cr-label">Core Rule</div>
+        <h3>Every second people stay = more reach. Design for retention from the first frame.</h3>
+        <div class="cr-items">
+          <div class="cr-item"><strong>Hook Hard</strong><span>Earn the first 3 seconds</span></div>
+          <div class="cr-item"><strong>Loop It</strong><span>Rewatches multiply reach</span></div>
+          <div class="cr-item"><strong>Cut the Fat</strong><span>Dead moments lose viewers</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="sub4-sharessaves" class="subtab-content">
+    <div class="container">
+      <div class="section-header" style="padding-top:2.5rem;">
+        <div class="section-num">03 — How to Farm Engagement</div>
+        <div class="section-title">Shares &amp; Saves</div>
+        <div class="section-desc">Shares and saves are the two highest-value engagement signals.</div>
+      </div>
+      <div class="vp-intro">
+        <p>A like takes 0.5 seconds. A share or save is intentional. That's why they weigh more.</p>
+        <p>Build every post with one question in mind: <strong style="color:var(--text);">why would someone save or share this?</strong></p>
+      </div>
+      <div class="split-grid" style="margin-bottom:1.5rem;">
+        <div class="card" style="border-color:var(--gold-dim);">
+          <div class="card-label" style="color:var(--gold);font-size:11px;letter-spacing:0.12em;">📤 Shares</div>
+          <div class="item-row" style="font-size:14px;border-color:var(--border);">Sent directly to another person</div>
+          <div class="item-row" style="font-size:14px;border-color:var(--border);">Strongest reach signal — brings new viewers</div>
+          <div class="item-row" style="font-size:14px;border-bottom:none;color:var(--gold);font-size:12px;padding-top:0.7rem;">Best for relatable, emotional, viral content</div>
+        </div>
+        <div class="card">
+          <div class="card-label" style="color:var(--gold);font-size:11px;letter-spacing:0.12em;">🔖 Saves</div>
+          <div class="item-row" style="font-size:14px;border-color:var(--border);">Bookmarked to come back to later</div>
+          <div class="item-row" style="font-size:14px;border-color:var(--border);">Signal of high perceived value</div>
+          <div class="item-row" style="font-size:14px;border-bottom:none;color:var(--gold);font-size:12px;padding-top:0.7rem;">Best for tips, guides, aspirational content</div>
+        </div>
+      </div>
+      <div class="core-rule" style="margin-bottom:4rem;">
+        <div class="cr-label">Core Rule</div>
+        <h3>Shares and saves are the two signals that expand your reach beyond your followers.</h3>
+        <div class="cr-items">
+          <div class="cr-item"><strong>Make It Relatable</strong><span>Relatability drives shares</span></div>
+          <div class="cr-item"><strong>Pack Value</strong><span>Value drives saves</span></div>
+          <div class="cr-item"><strong>Ask Directly</strong><span>CTAs increase both</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     VIDEO OPTIMIZATION PAGE  (NEW)
+═══════════════════════════════════════════════════════ -->
+<div id="page-videoopt" class="page">
+  <div class="subtab-bar">
+    <div class="container">
+      <div style="display:flex;align-items:center;gap:0;">
+        <button onclick="showPage('thestart')" style="height:52px;padding:0 1.1rem;background:none;border:none;border-right:1px solid var(--border);color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;display:flex;align-items:center;gap:6px;transition:color 0.2s;flex-shrink:0;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">← Back</button>
+        <div class="subtabs">
+          <button class="subtab active" data-sub5="hook" onclick="showSubTab5('hook')">Hook &amp; First Impression Optimization</button>
+          <button class="subtab" data-sub5="retention" onclick="showSubTab5('retention')">Retention, Pacing &amp; Structure</button>
+          <button class="subtab" data-sub5="captions" onclick="showSubTab5('captions')">Captions, Hashtags &amp; Sounds</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SUB-TAB 1: HOOK & FIRST IMPRESSION OPTIMIZATION ── -->
+  <div id="sub5-hook" class="subtab-content active">
+    <div class="container">
+      <div class="section-header" style="padding-top:2.5rem;">
+        <div class="section-num">01 — Video Optimization</div>
+        <div class="section-title">Hook &amp; First Impression<br>Optimization</div>
+        <div class="section-desc">The first 1–3 seconds decide everything. If your hook doesn't stop the scroll, no other optimization matters.</div>
+      </div>
+
+      <div class="vp-intro">
+        <p>Most people lose 40–60% of their viewers in the first 3 seconds.</p>
+        <p>Your hook isn't just the opening line — it's the first visual, the first word, the first feeling. All of it has to earn the viewer's attention immediately.</p>
+      </div>
+
+      <div class="section-title" style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;">Why the Hook is Everything</div>
+      <div class="split-grid" style="margin-bottom:1.5rem;">
+        <div class="card good">
+          <div class="card-label g">Strong Hook Does This</div>
+          <div class="item-row g"><span class="ic">✓</span> Stops the scroll instantly</div>
+          <div class="item-row g"><span class="ic">✓</span> Creates curiosity or emotion immediately</div>
+          <div class="item-row g"><span class="ic">✓</span> Promises a payoff worth staying for</div>
+          <div class="item-row g"><span class="ic">✓</span> Sets the energy and tone</div>
+          <div class="item-row g"><span class="ic">✓</span> Signals the content is for them</div>
+        </div>
+        <div class="card" style="display:flex;flex-direction:column;justify-content:center;text-align:center;padding:1.5rem;">
+          <div style="font-size:2.5rem;margin-bottom:0.6rem;">⚡</div>
+          <div style="font-size:14px;color:var(--muted);">The algorithm measures how many people stay past 3 seconds. <strong style="color:var(--text);">That number is your hook score.</strong></div>
+        </div>
+      </div>
+      <div class="div"></div>
+
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">1. The Visual Hook</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Before anyone reads a word, they see something. The first frame needs to arrest attention.</p>
+      <div class="split-grid">
+        <div class="card good">
+          <div class="card-label g">Strong First Frames</div>
+          <div class="item-row g"><span class="ic">✓</span> Movement or action already happening</div>
+          <div class="item-row g"><span class="ic">✓</span> High-contrast or visually striking image</div>
+          <div class="item-row g"><span class="ic">✓</span> Something unexpected or confusing</div>
+          <div class="item-row g"><span class="ic">✓</span> The most exciting moment in the video</div>
+          <div class="item-row g"><span class="ic">✓</span> Clear subject — not cluttered</div>
+        </div>
+        <div class="card bad">
+          <div class="card-label b">Weak First Frames</div>
+          <div class="item-row b"><span class="ic">✗</span> Static or boring opener</div>
+          <div class="item-row b"><span class="ic">✗</span> Black screen or slow fade-in</div>
+          <div class="item-row b"><span class="ic">✗</span> Generic establishing shots</div>
+          <div class="item-row b"><span class="ic">✗</span> Cluttered or confusing visuals</div>
+        </div>
+      </div>
+      <div class="tip"><strong>Rule:</strong> If your thumbnail wouldn't stop you scrolling, change the first clip.</div>
+      <div class="div"></div>
+
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">2. The Text Hook</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">On-screen text in the first 1–2 seconds can dramatically increase watch time when done right.</p>
+      <div class="triggers-grid" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr));">
+        <div class="trigger-card">
+          <div class="trigger-header"><div class="trigger-num">A</div><div class="trigger-name">Curiosity Hook</div></div>
+          <ul class="trigger-bullets">
+            <li>"You won't believe this..."</li>
+            <li>"This changed everything"</li>
+            <li>"Nobody talks about this"</li>
+            <li>"Wait until the end"</li>
+          </ul>
+          <div class="trigger-why">↑ Open loop forces completion</div>
+        </div>
+        <div class="trigger-card">
+          <div class="trigger-header"><div class="trigger-num">B</div><div class="trigger-name">Aspirational Hook</div></div>
+          <ul class="trigger-bullets">
+            <li>"POV: you make money at 19"</li>
+            <li>"This is what freedom looks like"</li>
+            <li>"Life when you stop caring what people think"</li>
+          </ul>
+          <div class="trigger-why">↑ Aspiration keeps people watching</div>
+        </div>
+        <div class="trigger-card">
+          <div class="trigger-header"><div class="trigger-num">C</div><div class="trigger-name">Bold Statement Hook</div></div>
+          <ul class="trigger-bullets">
+            <li>"Most people will stay broke"</li>
+            <li>"The 9-5 was designed to keep you poor"</li>
+            <li>"Hard truth about getting rich"</li>
+          </ul>
+          <div class="trigger-why">↑ Controversy creates reaction</div>
+        </div>
+        <div class="trigger-card">
+          <div class="trigger-header"><div class="trigger-num">D</div><div class="trigger-name">Relatable Hook</div></div>
+          <ul class="trigger-bullets">
+            <li>"When you're the only one building..."</li>
+            <li>"For the ones who work in silence"</li>
+            <li>"They laughed, now they're watching"</li>
+          </ul>
+          <div class="trigger-why">↑ Relatability drives shares</div>
+        </div>
+      </div>
+      <div class="div"></div>
+
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">3. Hook Placement & Timing</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Where and when your hook appears matters as much as what it says.</p>
+      <div class="pills" style="margin-bottom:1.2rem;">
+        <div class="pill"><span class="ck">✓</span> Text appears within the first 0.5 seconds</div>
+        <div class="pill"><span class="ck">✓</span> Large, readable font size</div>
+        <div class="pill"><span class="ck">✓</span> Contrasting colour against the background</div>
+        <div class="pill"><span class="ck">✓</span> Centre or upper-centre screen placement</div>
+        <div class="pill bad">✗ Text that appears after 2+ seconds</div>
+        <div class="pill bad">✗ Small or hard-to-read text</div>
+      </div>
+      <div class="div"></div>
+
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">4. Sound as a Hook</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Audio is often overlooked — but it's heard before anything is read.</p>
+      <div class="split-grid">
+        <div class="card good">
+          <div class="card-label g">Strong Audio Hooks</div>
+          <div class="item-row g"><span class="ic">✓</span> High-energy beat drop at the start</div>
+          <div class="item-row g"><span class="ic">✓</span> Recognisable trending sound</div>
+          <div class="item-row g"><span class="ic">✓</span> Dramatic or surprising audio moment</div>
+          <div class="item-row g"><span class="ic">✓</span> Silence followed by a sudden sound</div>
+        </div>
+        <div class="card bad">
+          <div class="card-label b">Weak Audio Hooks</div>
+          <div class="item-row b"><span class="ic">✗</span> Slow build-up music</div>
+          <div class="item-row b"><span class="ic">✗</span> Generic background music with no impact</div>
+          <div class="item-row b"><span class="ic">✗</span> Audio that doesn't match the visual energy</div>
+        </div>
+      </div>
+      <div class="div"></div>
+
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">5. Testing Your Hook</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">The only way to know if a hook works is to test it. Here's how to do it systematically.</p>
+      <div class="version-grid">
+        <div class="version-card"><div class="v-label">Test A</div><div class="v-title">Change the Text</div><div class="v-desc">Same video, different opening line</div></div>
+        <div class="version-card"><div class="v-label">Test B</div><div class="v-title">Change the First Clip</div><div class="v-desc">Same concept, different opening visual</div></div>
+        <div class="version-card"><div class="v-label">Test C</div><div class="v-title">Change the Sound</div><div class="v-desc">Same edit, different audio from frame one</div></div>
+      </div>
+      <div class="tip"><strong>Rule:</strong> If your 3-second retention is below 60%, the hook needs work.</div>
+
+      <div class="core-rule" style="margin-bottom:4rem;">
+        <div class="cr-label">Core Rule</div>
+        <h3>You can't fix a bad hook with good editing. Win the first 3 seconds or lose the video.</h3>
+        <div class="cr-items">
+          <div class="cr-item"><strong>Visual First</strong><span>First frame must arrest</span></div>
+          <div class="cr-item"><strong>Text Fast</strong><span>On screen within 0.5s</span></div>
+          <div class="cr-item"><strong>Test Always</strong><span>One variable at a time</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SUB-TAB 2: RETENTION, PACING & STRUCTURE ── -->
+  <div id="sub5-retention" class="subtab-content">
+    <div class="container">
+      <div class="section-header" style="padding-top:2.5rem;">
+        <div class="section-num">02 — Video Optimization</div>
+        <div class="section-title">Retention, Pacing<br>&amp; Structure</div>
+        <div class="section-desc">Getting people to start watching is one thing. Keeping them watching is what actually drives reach. Structure and pacing are the tools that do it.</div>
+      </div>
+
+      <div class="vp-intro">
+        <p>The algorithm rewards videos that people watch all the way through — or watch multiple times.</p>
+        <p>Pacing controls how fast the video moves. Structure controls where the payoff sits. Get both right and retention takes care of itself.</p>
+      </div>
+
+      <div class="section-title" style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;">The Retention Stack</div>
+      <div class="split-grid" style="margin-bottom:1.5rem;">
+        <div class="card good">
+          <div class="card-label g">What Keeps People Watching</div>
+          <div class="item-row g"><span class="ic">✓</span> Something new happening every 2–3 seconds</div>
+          <div class="item-row g"><span class="ic">✓</span> An unanswered question keeping them hooked</div>
+          <div class="item-row g"><span class="ic">✓</span> Emotional progression — the feeling builds</div>
+          <div class="item-row g"><span class="ic">✓</span> Visual variety — different clips, angles, text</div>
+          <div class="item-row g"><span class="ic">✓</span> A payoff they can sense is coming</div>
+        </div>
+        <div class="card bad">
+          <div class="card-label b">What Loses Viewers</div>
+          <div class="item-row b"><span class="ic">✗</span> Same clip or visual for too long</div>
+          <div class="item-row b"><span class="ic">✗</span> Long sections with no new information</div>
+          <div class="item-row b"><span class="ic">✗</span> Predictable middle — they know what's coming</div>
+          <div class="item-row b"><span class="ic">✗</span> Slow or empty transitions</div>
+          <div class="item-row b"><span class="ic">✗</span> Burying the payoff so deep they leave first</div>
+        </div>
+      </div>
+      <div class="div"></div>
+
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">1. Pacing Rules</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Pacing is the rhythm of your edit. Get it wrong and the video feels slow even if the content is good.</p>
+      <div class="triggers-grid" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr));">
+        <div class="trigger-card">
+          <div class="trigger-header"><div class="trigger-num">1</div><div class="trigger-name">Clip Length</div></div>
+          <ul class="trigger-bullets">
+            <li>Keep most clips under 2–3 seconds</li>
+            <li>Longer clips only when there's movement</li>
+            <li>Cut before the viewer gets bored — not after</li>
+          </ul>
+          <div class="trigger-why">↑ Short clips = perceived speed</div>
+        </div>
+        <div class="trigger-card">
+          <div class="trigger-header"><div class="trigger-num">2</div><div class="trigger-name">Beat Sync</div></div>
+          <ul class="trigger-bullets">
+            <li>Cut on the beat of the music</li>
+            <li>Use beat drops for big visual changes</li>
+            <li>Build-up sections = slower clips, drop = fast cuts</li>
+          </ul>
+          <div class="trigger-why">↑ Music-driven pacing feels satisfying</div>
+        </div>
+        <div class="trigger-card">
+          <div class="trigger-header"><div class="trigger-num">3</div><div class="trigger-name">Remove the Fat</div></div>
+          <ul class="trigger-bullets">
+            <li>Cut any moment that doesn't move the video forward</li>
+            <li>If you hesitated whether to cut it — cut it</li>
+            <li>Dead air is the #1 watch-time killer</li>
+          </ul>
+          <div class="trigger-why">↑ Tight edits feel fast and engaging</div>
+        </div>
+        <div class="trigger-card">
+          <div class="trigger-header"><div class="trigger-num">4</div><div class="trigger-name">Visual Variety</div></div>
+          <ul class="trigger-bullets">
+            <li>Change angles between clips</li>
+            <li>Mix wide shots with close-ups</li>
+            <li>Layer text over clips to add visual depth</li>
+          </ul>
+          <div class="trigger-why">↑ Variety reduces drop-off mid-video</div>
+        </div>
+      </div>
+      <div class="div"></div>
+
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">2. The Proven Structure</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Most high-performing short-form videos follow a simple 4-part structure. Use it as your baseline.</p>
+      <div class="split-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:1.5rem;">
+        <div class="card" style="text-align:center;padding:1.2rem 0.8rem;border-color:var(--gold-dim);">
+          <div style="width:32px;height:32px;border-radius:50%;background:var(--gold);color:#000;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 0.7rem;">1</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.85rem;margin-bottom:0.3rem;">Hook</div>
+          <div style="font-size:11px;color:var(--muted);">Stop the scroll. First 1–3s.</div>
+        </div>
+        <div class="card" style="text-align:center;padding:1.2rem 0.8rem;">
+          <div style="width:32px;height:32px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 0.7rem;">2</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.85rem;margin-bottom:0.3rem;">Build</div>
+          <div style="font-size:11px;color:var(--muted);">Deliver value. Maintain curiosity.</div>
+        </div>
+        <div class="card" style="text-align:center;padding:1.2rem 0.8rem;">
+          <div style="width:32px;height:32px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 0.7rem;">3</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.85rem;margin-bottom:0.3rem;">Payoff</div>
+          <div style="font-size:11px;color:var(--muted);">The moment they stayed for.</div>
+        </div>
+        <div class="card" style="text-align:center;padding:1.2rem 0.8rem;">
+          <div style="width:32px;height:32px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 0.7rem;">4</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.85rem;margin-bottom:0.3rem;">Loop / CTA</div>
+          <div style="font-size:11px;color:var(--muted);">Rewatch trigger or action.</div>
+        </div>
+      </div>
+      <div class="tip"><strong>Rule:</strong> If your video doesn't have a clear payoff, people stop watching early and never come back.</div>
+      <div class="div"></div>
+
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">3. The Open Loop Technique</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">An open loop is a promise you make that isn't fulfilled until later in the video. It forces people to stay.</p>
+      <div class="split-grid">
+        <div class="card good">
+          <div class="card-label g">Open Loop Examples</div>
+          <div class="item-row g"><span class="ic">✓</span> "I'm going to show you exactly how at the end"</div>
+          <div class="item-row g"><span class="ic">✓</span> "The answer might surprise you — keep watching"</div>
+          <div class="item-row g"><span class="ic">✓</span> Show the result first, explain how after</div>
+          <div class="item-row g"><span class="ic">✓</span> "Wait for it..." text mid-video</div>
+        </div>
+        <div class="card" style="display:flex;flex-direction:column;justify-content:center;text-align:center;padding:1.5rem;">
+          <div style="font-size:2.5rem;margin-bottom:0.6rem;">🔁</div>
+          <div style="font-size:14px;color:var(--muted);">Open loops create <strong style="color:var(--text);">psychological tension</strong> — people physically can't leave until it's resolved.</div>
+        </div>
+      </div>
+      <div class="div"></div>
+
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">4. Rewatch Design</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Rewatches are one of the strongest signals you can send the algorithm. Design them in intentionally.</p>
+      <div class="vp-two-col">
+        <div class="vp-info-card">
+          <h4>Rewatch triggers</h4>
+          <ul>
+            <li>Seamless loop ending — video ends where it begins</li>
+            <li>Fast text or hidden details they might have missed</li>
+            <li>So much value packed in they need to rewatch to absorb it</li>
+            <li>Satisfying visuals they want to see again</li>
+            <li>An ending that makes them question the beginning</li>
+          </ul>
+        </div>
+        <div class="vp-info-card">
+          <h4>The rewatch effect</h4>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:0.7rem;">Every rewatch counts as additional watch time.</p>
+          <ul>
+            <li>2 rewatches = effectively 3x watch time for that viewer</li>
+            <li>10 rewatches per post sends a major positive signal</li>
+            <li>Loop videos naturally generate rewatches without asking</li>
+          </ul>
+          <div class="vp-payoff-note">↑ Rewatch = multiplied reach signal</div>
+        </div>
+      </div>
+      <div class="div"></div>
+
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">5. Video Length Strategy</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Length isn't a formula — it's a discipline. The right length is the shortest version that still delivers the full payoff.</p>
+      <div class="split-grid">
+        <div class="card">
+          <div class="card-label" style="color:var(--gold);font-size:11px;letter-spacing:0.12em;">Short (5–15 sec)</div>
+          <div class="item-row" style="font-size:14px;border-color:var(--border);">✓ High natural completion rate</div>
+          <div class="item-row" style="font-size:14px;border-color:var(--border);">✓ Loop-friendly</div>
+          <div class="item-row" style="font-size:14px;border-color:var(--border);">✓ Ideal for aesthetic clips and single ideas</div>
+          <div class="item-row" style="font-size:14px;border-bottom:none;">✓ Easier to test and iterate quickly</div>
+        </div>
+        <div class="card">
+          <div class="card-label" style="color:var(--gold);font-size:11px;letter-spacing:0.12em;">Medium / Long (30–60+ sec)</div>
+          <div class="item-row" style="font-size:14px;border-color:var(--border);">✓ More room for storytelling and emotion</div>
+          <div class="item-row" style="font-size:14px;border-color:var(--border);">✓ Better for tips, lists, and value content</div>
+          <div class="item-row" style="font-size:14px;border-color:var(--border);">✓ Requires tight pacing throughout</div>
+          <div class="item-row" style="font-size:14px;border-bottom:none;">✓ Every second must justify its presence</div>
+        </div>
+      </div>
+      <div class="tip"><strong>Rule:</strong> Make it as long as it needs to be — and cut everything else.</div>
+
+      <div class="four-things-bar" style="margin-bottom:1.5rem;">
+        <p>The Retention Formula</p>
+        <div class="four-pills">
+          <div class="pill-gold"><span class="ck">✔</span> Fast Pacing</div>
+          <div class="pill-gold"><span class="ck">✔</span> Open Loops</div>
+          <div class="pill-gold"><span class="ck">✔</span> Clear Structure</div>
+          <div class="pill-gold"><span class="ck">✔</span> Strong Payoff</div>
+          <div class="pill-gold"><span class="ck">✔</span> Rewatch Design</div>
+          <div class="pill-gold"><span class="ck">✔</span> No Dead Moments</div>
+        </div>
+      </div>
+      <div class="core-rule" style="margin-bottom:4rem;">
+        <div class="cr-label">Core Rule</div>
+        <h3>Every second that doesn't earn its place loses a viewer. Edit with ruthless intention.</h3>
+        <div class="cr-items">
+          <div class="cr-item"><strong>Pace It</strong><span>Cut before they get bored</span></div>
+          <div class="cr-item"><strong>Structure It</strong><span>Hook → Build → Payoff</span></div>
+          <div class="cr-item"><strong>Loop It</strong><span>Design rewatches in</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SUB-TAB 3: CAPTIONS, HASHTAGS & SOUNDS ── -->
+  <div id="sub5-captions" class="subtab-content">
+    <div class="container">
+      <div class="section-header" style="padding-top:2.5rem;">
+        <div class="section-num">03 — Video Optimization</div>
+        <div class="section-title">Captions, Hashtags<br>&amp; Sounds</div>
+        <div class="section-desc">The parts most people treat as an afterthought are actually powerful distribution levers. Optimise all three and you push your video further before it even gets views.</div>
+      </div>
+
+      <div class="vp-intro">
+        <p>Your video doesn't exist in isolation. Captions, hashtags, and sounds all feed data to the algorithm about who to show your content to.</p>
+        <p>Done right, they expand your reach. Done wrong, they confuse the algorithm and limit distribution.</p>
+      </div>
+
+      <!-- CAPTIONS SECTION -->
+      <div class="section-title" style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;">Part 1 — Captions</div>
+
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">1. What Captions Actually Do</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">The caption is read by the algorithm and by the viewer. Both matter.</p>
+      <div class="split-grid" style="margin-bottom:1.5rem;">
+        <div class="card good">
+          <div class="card-label g">Caption Does This</div>
+          <div class="item-row g"><span class="ic">✓</span> Tells the algorithm what the content is about</div>
+          <div class="item-row g"><span class="ic">✓</span> Pulls people in before they even start watching</div>
+          <div class="item-row g"><span class="ic">✓</span> Can be used to trigger comments and reactions</div>
+          <div class="item-row g"><span class="ic">✓</span> Adds context that the video alone doesn't give</div>
+          <div class="item-row g"><span class="ic">✓</span> Signals niche to new viewers landing on the post</div>
+        </div>
+        <div class="card" style="display:flex;flex-direction:column;justify-content:center;text-align:center;padding:1.5rem;">
+          <div style="font-size:2.5rem;margin-bottom:0.6rem;">📝</div>
+          <div style="font-size:14px;color:var(--muted);">A strong caption can push a mediocre video.<br><br>A weak caption can tank a great one.</div>
+        </div>
+      </div>
+      <div class="div"></div>
+
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">2. Caption Formulas That Work</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">These formats consistently pull engagement and tell the algorithm exactly what the post is about.</p>
+      <div class="triggers-grid" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr));">
+        <div class="trigger-card">
+          <div class="trigger-header"><div class="trigger-num">A</div><div class="trigger-name">Question CTA</div></div>
+          <ul class="trigger-bullets">
+            <li>"Which one would you choose?"</li>
+            <li>"Agree or disagree?"</li>
+            <li>"Drop a number in the comments"</li>
+          </ul>
+          <div class="trigger-why">↑ Drives comment engagement directly</div>
+        </div>
+        <div class="trigger-card">
+          <div class="trigger-header"><div class="trigger-num">B</div><div class="trigger-name">Statement + Hook</div></div>
+          <ul class="trigger-bullets">
+            <li>"This is what most people get wrong about money."</li>
+            <li>"Nobody talks about this part."</li>
+            <li>"The truth about building online."</li>
+          </ul>
+          <div class="trigger-why">↑ Creates curiosity before the video plays</div>
+        </div>
+        <div class="trigger-card">
+          <div class="trigger-header"><div class="trigger-num">C</div><div class="trigger-name">Save CTA</div></div>
+          <ul class="trigger-bullets">
+            <li>"Save this before you need it 🔖"</li>
+            <li>"Bookmark this — you'll come back to it"</li>
+            <li>"Save for later, trust me"</li>
+          </ul>
+          <div class="trigger-why">↑ Directly increases save rate</div>
+        </div>
+        <div class="trigger-card">
+          <div class="trigger-header"><div class="trigger-num">D</div><div class="trigger-name">Share CTA</div></div>
+          <ul class="trigger-bullets">
+            <li>"Send this to someone building right now"</li>
+            <li>"Tag your grind partner"</li>
+            <li>"Share if this is you"</li>
+          </ul>
+          <div class="trigger-why">↑ Drives shares and reach expansion</div>
+        </div>
+      </div>
+      <div class="div"></div>
+
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">3. Caption Length</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Shorter usually wins on short-form. But it depends on the content type.</p>
+      <div class="split-grid">
+        <div class="card">
+          <div class="card-label" style="color:var(--gold);font-size:11px;letter-spacing:0.12em;">Short Caption (1 line)</div>
+          <div class="item-row" style="font-size:14px;border-color:var(--border);">✓ Best for aesthetic / aspirational videos</div>
+          <div class="item-row" style="font-size:14px;border-color:var(--border);">✓ Less is more for luxury and vibe content</div>
+          <div class="item-row" style="font-size:14px;border-bottom:none;">✓ Fast to read before scrolling past</div>
+        </div>
+        <div class="card">
+          <div class="card-label" style="color:var(--gold);font-size:11px;letter-spacing:0.12em;">Longer Caption (2–4 lines)</div>
+          <div class="item-row" style="font-size:14px;border-color:var(--border);">✓ Great for opinion or debate content</div>
+          <div class="item-row" style="font-size:14px;border-color:var(--border);">✓ Adds context to tips or value posts</div>
+          <div class="item-row" style="font-size:14px;border-bottom:none;">✓ Good for comment-bait questions</div>
+        </div>
+      </div>
+      <div class="tip"><strong>Rule:</strong> Don't write a caption just to have one. Make it add something.</div>
+      <div class="div"></div>
+
+      <!-- HASHTAGS SECTION -->
+      <div class="section-title" style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;">Part 2 — Hashtags</div>
+
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">4. How Hashtags Work</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Hashtags help the algorithm categorise your content and surface it to the right audience.</p>
+      <div class="vp-two-col">
+        <div class="vp-info-card">
+          <h4>What hashtags do</h4>
+          <ul>
+            <li>Signal the niche and topic to the algorithm</li>
+            <li>Help new viewers find your content through search</li>
+            <li>Place your video in relevant content categories</li>
+            <li>Can expose your post to active hashtag communities</li>
+          </ul>
+        </div>
+        <div class="vp-info-card">
+          <h4>What hashtags don't do</h4>
+          <ul>
+            <li>Guarantee views — the content still has to perform</li>
+            <li>Substitute for a strong hook or good editing</li>
+            <li>Help you if they're completely unrelated to the video</li>
+          </ul>
+          <div class="vp-payoff-note">↑ Hashtags amplify, they don't replace quality</div>
+        </div>
+      </div>
+      <div class="div"></div>
+
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">5. Hashtag Strategy</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Use a mix of sizes. Don't spam big hashtags — you'll get buried.</p>
+      <div class="split-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:1.5rem;">
+        <div class="card" style="text-align:center;padding:1.2rem 0.8rem;border-color:var(--gold-dim);">
+          <div style="font-size:1.5rem;margin-bottom:0.5rem;">🎯</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.85rem;margin-bottom:0.3rem;">Niche Tags</div>
+          <div style="font-size:12px;color:var(--muted);">Specific to your content. Mid-sized. #luxurymindset #tiktokgrowth</div>
+        </div>
+        <div class="card" style="text-align:center;padding:1.2rem 0.8rem;">
+          <div style="font-size:1.5rem;margin-bottom:0.5rem;">📊</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.85rem;margin-bottom:0.3rem;">Mid Tags</div>
+          <div style="font-size:12px;color:var(--muted);">Broader category. Moderate competition. #money #hustle</div>
+        </div>
+        <div class="card" style="text-align:center;padding:1.2rem 0.8rem;">
+          <div style="font-size:1.5rem;margin-bottom:0.5rem;">🚀</div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.85rem;margin-bottom:0.3rem;">Broad Tags</div>
+          <div style="font-size:12px;color:var(--muted);">Use 1–2 max. Very high competition. #fyp #viral</div>
+        </div>
+      </div>
+      <div class="pills" style="margin-bottom:1.2rem;">
+        <div class="pill"><span class="ck">✓</span> 3–5 total hashtags is usually enough</div>
+        <div class="pill"><span class="ck">✓</span> All hashtags should be relevant to the video</div>
+        <div class="pill bad">✗ Don't use 30+ irrelevant tags</div>
+        <div class="pill bad">✗ Don't use the exact same tags on every post</div>
+      </div>
+      <div class="div"></div>
+
+      <!-- SOUNDS SECTION -->
+      <div class="section-title" style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;">Part 3 — Sounds</div>
+
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">6. Why Sound Matters for Distribution</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">On TikTok and Reels, sounds are their own distribution system. The right sound puts your video in front of people who already like that audio.</p>
+      <div class="split-grid">
+        <div class="card good">
+          <div class="card-label g">What Sounds Do</div>
+          <div class="item-row g"><span class="ic">✓</span> Trending sounds get boosted by the algorithm</div>
+          <div class="item-row g"><span class="ic">✓</span> Familiar sounds create instant recognition</div>
+          <div class="item-row g"><span class="ic">✓</span> The right energy match amplifies the video</div>
+          <div class="item-row g"><span class="ic">✓</span> Using a sound before it peaks = extra reach</div>
+        </div>
+        <div class="card bad">
+          <div class="card-label b">Sound Mistakes</div>
+          <div class="item-row b"><span class="ic">✗</span> Using a sound that clashes with the video energy</div>
+          <div class="item-row b"><span class="ic">✗</span> Picking sounds that are months past their peak</div>
+          <div class="item-row b"><span class="ic">✗</span> Volume too low — music should enhance, not disappear</div>
+          <div class="item-row b"><span class="ic">✗</span> Copyrighted music that gets the audio muted</div>
+        </div>
+      </div>
+      <div class="div"></div>
+
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">7. Sound Selection Strategy</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Picking the right sound is a skill. Here's how to approach it.</p>
+      <div class="triggers-grid" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr));">
+        <div class="trigger-card">
+          <div class="trigger-header"><div class="trigger-num">1</div><div class="trigger-name">Trending Sounds</div></div>
+          <ul class="trigger-bullets">
+            <li>Check the TikTok trending sounds section daily</li>
+            <li>Look for sounds used by accounts in your niche</li>
+            <li>Use sounds that are rising — not already peaked</li>
+            <li>The earlier you use a trending sound, the more reach</li>
+          </ul>
+          <div class="trigger-why">↑ Early trend adoption = distribution boost</div>
+        </div>
+        <div class="trigger-card">
+          <div class="trigger-header"><div class="trigger-num">2</div><div class="trigger-name">Niche Sounds</div></div>
+          <ul class="trigger-bullets">
+            <li>Cinematic / dark beats for luxury and larp content</li>
+            <li>High-energy trap for money and hustle content</li>
+            <li>Motivational scores for success content</li>
+            <li>Match energy to the visual at all times</li>
+          </ul>
+          <div class="trigger-why">↑ Energy match amplifies the feeling</div>
+        </div>
+        <div class="trigger-card">
+          <div class="trigger-header"><div class="trigger-num">3</div><div class="trigger-name">Evergreen Sounds</div></div>
+          <ul class="trigger-bullets">
+            <li>Some sounds work forever — identify yours</li>
+            <li>Classic cinematic and lo-fi beats always perform</li>
+            <li>Build a saved library of sounds that work</li>
+            <li>Reuse winning sounds across new videos</li>
+          </ul>
+          <div class="trigger-why">↑ Proven sounds reduce the guesswork</div>
+        </div>
+      </div>
+      <div class="tip"><strong>Rule:</strong> If you see a sound blowing up across accounts in your niche — use it today, not next week.</div>
+      <div class="div"></div>
+
+      <div class="section-title" style="font-size:1.3rem;margin-bottom:0.4rem;">8. The Full Optimisation Checklist</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:1.2rem;">Run through this before every post goes live.</p>
+      <div class="split-grid">
+        <div class="card good">
+          <div class="card-label g">Caption</div>
+          <div class="item-row g"><span class="ic">✓</span> Matches the energy of the video</div>
+          <div class="item-row g"><span class="ic">✓</span> Has a clear CTA (comment, save, or share)</div>
+          <div class="item-row g"><span class="ic">✓</span> Short and punchy or intentionally longer</div>
+          <div class="item-row g"><span class="ic">✓</span> Adds something the video doesn't show</div>
+        </div>
+        <div class="card good">
+          <div class="card-label g">Hashtags</div>
+          <div class="item-row g"><span class="ic">✓</span> 3–5 relevant tags — no spam</div>
+          <div class="item-row g"><span class="ic">✓</span> Mix of niche, mid, and 1 broad tag</div>
+          <div class="item-row g"><span class="ic">✓</span> All tags relate to this specific video</div>
+          <div class="item-row g"><span class="ic">✓</span> Not copy-pasted from last post</div>
+        </div>
+      </div>
+      <div class="split-grid" style="margin-top:1rem;">
+        <div class="card good">
+          <div class="card-label g">Sound</div>
+          <div class="item-row g"><span class="ic">✓</span> Trending, evergreen, or niche-matched</div>
+          <div class="item-row g"><span class="ic">✓</span> Energy matches the visual vibe</div>
+          <div class="item-row g"><span class="ic">✓</span> Volume level feels right — not too quiet</div>
+          <div class="item-row g"><span class="ic">✓</span> Not past its peak performance window</div>
+        </div>
+        <div class="card" style="display:flex;flex-direction:column;justify-content:center;text-align:center;padding:1.5rem;">
+          <div style="font-size:2.5rem;margin-bottom:0.6rem;">✅</div>
+          <div style="font-size:14px;color:var(--muted);">Run this checklist every time.<br><br><strong style="color:var(--text);">Consistency compounds.</strong></div>
+        </div>
+      </div>
+
+      <div class="four-things-bar" style="margin-bottom:1.5rem;">
+        <p>Optimization Beyond the Edit</p>
+        <div class="four-pills">
+          <div class="pill-gold"><span class="ck">✔</span> Strong Caption</div>
+          <div class="pill-gold"><span class="ck">✔</span> Relevant Hashtags</div>
+          <div class="pill-gold"><span class="ck">✔</span> Right Sound</div>
+          <div class="pill-gold"><span class="ck">✔</span> Clear CTA</div>
+        </div>
+      </div>
+      <div class="core-rule" style="margin-bottom:4rem;">
+        <div class="cr-label">Core Rule</div>
+        <h3>The video gets people watching. Captions, hashtags and sounds get it in front of them in the first place.</h3>
+        <div class="cr-items">
+          <div class="cr-item"><strong>Caption</strong><span>Pulls them in and triggers action</span></div>
+          <div class="cr-item"><strong>Hashtags</strong><span>Signal the right audience</span></div>
+          <div class="cr-item"><strong>Sound</strong><span>Match energy, ride trends</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer>
+  <p>© 2025 <span>Kirbs Larps Agency</span> — All rights reserved.</p>
+</footer>
+
+<script>
+  function showPage(name) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-tabs a').forEach(a => a.classList.remove('active'));
+    document.getElementById('page-' + name).classList.add('active');
+    const tab = document.querySelector('[data-page="' + name + '"]');
+    if (tab) tab.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showSubTab(name) {
+    document.querySelectorAll('#page-account .subtab-content').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('#page-account .subtab').forEach(s => s.classList.remove('active'));
+    document.getElementById('sub-' + name).classList.add('active');
+    const btn = document.querySelector('#page-account .subtab[data-sub="' + name + '"]');
+    if (btn) btn.classList.add('active');
+  }
+
+  function showSubTab2(name) {
+    document.querySelectorAll('#page-reinvent .subtab-content').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('#page-reinvent .subtab').forEach(s => s.classList.remove('active'));
+    document.getElementById('sub2-' + name).classList.add('active');
+    const btn = document.querySelector('#page-reinvent .subtab[data-sub="' + name + '"]');
+    if (btn) btn.classList.add('active');
+  }
+
+  function showSubTab3(name) {
+    document.querySelectorAll('#page-goviral .subtab-content').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('#page-goviral .subtab').forEach(s => s.classList.remove('active'));
+    document.getElementById('sub3-' + name).classList.add('active');
+    const btn = document.querySelector('#page-goviral .subtab[data-sub3="' + name + '"]');
+    if (btn) btn.classList.add('active');
+  }
+
+  function showSubTab4(name) {
+    document.querySelectorAll('#page-farmengagement .subtab-content').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('#page-farmengagement .subtab').forEach(s => s.classList.remove('active'));
+    document.getElementById('sub4-' + name).classList.add('active');
+    const btn = document.querySelector('#page-farmengagement .subtab[data-sub4="' + name + '"]');
+    if (btn) btn.classList.add('active');
+  }
+
+  function showSubTab5(name) {
+    document.querySelectorAll('#page-videoopt .subtab-content').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('#page-videoopt .subtab').forEach(s => s.classList.remove('active'));
+    document.getElementById('sub5-' + name).classList.add('active');
+    const btn = document.querySelector('#page-videoopt .subtab[data-sub5="' + name + '"]');
+    if (btn) btn.classList.add('active');
+  }
+</script>
+
+</body>
+</html>
